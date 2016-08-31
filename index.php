@@ -21,19 +21,25 @@
 <input type="submit" value = "КомСистемс" name = "KomSistems">
 <input type="submit" value = "АТЛАС-КАЛУГА" name = "AtlasKaluga">
 <input type="submit" value = "smeta-test" name = "smeta">
+<input type="submit" value = "CSV" name = "CSV">
+<input type="submit" value = "test" name = "autosearch">
 </form>
 <?
 $url = $_POST['url'];
-
+set_time_limit (600);
 include 'functions.php';
 include 'connections.php';
+if ($_POST['autosearch']){
+	AutoSearch();
+}
+if ($_POST['CSV']){
+	getCSV();
+}
 if ($_POST['smeta']){
-	searchASC3 ($url);
+	searchASC3();
 }
 //$arr7[0] = $_POST['url'];
 //array_push($arr[0],$arr7[0]);
-
-
 
 
 
