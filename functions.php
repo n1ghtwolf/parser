@@ -26,7 +26,6 @@ function AutoWriteToFile ($arr,$parse)
 	$arr_final[0][5]=$arr[0][3];
 	$arr_final[0][6]=$arr[0][2];
 	$arr_final[0][7]=$arr[0][4];
-	preg_replace("&#034","",$arr_final[0][6]);
 	
 	
 			$fp = fopen('tender.csv','a');
@@ -58,6 +57,8 @@ function WriteToFile($arr)
 	$arr_final[0][5]=$arr[0][3];
 	$arr_final[0][6]=$arr[0][2];
 	$arr_final[0][7]=$arr[0][4];
+	$str= $arr_final[0][6];
+	
 	$search = array ("'<script[^>]*?>.*?</script>'si",  // Вырезает javaScript 
                  "'<[\/\!]*?[^<>]*?>'si",           // Вырезает HTML-теги 
                  "'([\r\n])[\s]+'",                 // Вырезает пробельные символы 
@@ -72,20 +73,8 @@ function WriteToFile($arr)
                  "'&(copy|#169);'i", 
                  "'&#(\d+);'e");                    // интерпретировать как php-код 
  
-$replace = array ("", 
-                  "", 
-                  "\\1", 
-                  "\"", 
-                  "&", 
-                  "<", 
-                  ">", 
-                  " ", 
-                  chr(161), 
-                  chr(162), 
-                  chr(163), 
-                  chr(169), 
-                  "chr(\\1)");
-	preg_replace($search,$replace,$arr_final[0][6]);
+$replace = "";
+	preg_replace($search,$replace,$arr_final);
 	
 	
 		
@@ -200,89 +189,713 @@ function fz223($page,$page1)
 			$arr[0][5]=$arr6[0]=" ";}
 									
 }
-function AutoSearch (){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&openMode=USE_DEFAULT_PARAMS&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&orderNumber=&placingWaysList=&placingWaysList223=&priceFrom=0&priceTo=&currencyId=&participantName=&publishDateFrom=25.08.2016&publishDateTo=&updateDateFrom=&updateDateTo=&customerTitle=&customerCode=&customerFz94id=&customerFz223id=&customerInn=&agencyTitle=&agencyCode=&agencyFz94id=&agencyFz223id=&agencyInn=&districts=&regions=&af=on&ca=on&pc=on&deliveryAddress=&sortBy=UPDATE_DATE";
+function AutoSearchASC3 (){
+	$start = microtime(true);
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=14.09.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	/*$old = "31.08.2016";
+	$olddate = date("d.m.y.D");
+		if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y.D', strtotime('-2 day'));
+	echo "обнаружено воскресенье, выставляю дату".$newdate."\n";
+	ob_flush();
+	flush();
+	sleep(1);
+	  str_replace($old,$newdate,$url);
+}
+		else 
+{
+	$newdate = date("d.m.Y");
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	ob_flush();
+	flush();
+	sleep(1);
+	
+	
+	str_replace($old,$newdate,$url);
+	
+	
+}*/
+	$time =	time();
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	
+	$NumberOfPages = 1;
+			foreach	($sort as $s)
+	{
+	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
+	//echo $url1 . "</br>";
+	$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		
+	if($NumberOfPages>1)
+	{
+		for($i=0;$i<$NumberOfPages;$i++)
+		{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$url2=str_replace($match1,$match,$url1);	
+					echo $url2."</br>";
+		
+		$result = get_web_page($url2);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+		}
+	}
+	$smeta[] = $smet[2];
+	sleep(rand(3,5));
+	}
+	
+	//$smeta[] = $smet[2];
+	
+?><pre><?print_r($smeta); ?></pre><?
+
+	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
+	$smeta = array_unique($smeta);
+								
+								
+	?><pre><?print_r($smeta); ?></pre><?
+	
+	AutoinputAfterAutoSearch($smeta);
+	$time = microtime(true) - $start;
+printf('Скрипт выполнялся %.4F сек.', $time);
+ 	
+}
+function AutoSearchATLAS (){
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=14.09.2016&publishDateTo=&regions=5277323&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+	$search[]= "%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80"; // инженер
+	$search[]= "%D0%BA%D0%B0%D0%B4%D0%B0%D1%81%D1%82%D1%80"; // кадастр
+	$search[]= "%D0%BC%D0%B5%D0%B6%D0%B5%D0%B2"; // межев
+	$search[]= "%D0%B7%D0%B5%D0%BC"; // зем
+	$search[]= "%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D1%87+%D0%BF%D0%BB%D0%B0%D0%BD"; // технич план
+	$time =	time();
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+$old = "05.09.2016";
+ $olddate = date("d.m.y.D");
+/*if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y', strtotime('-2 day'));
+	echo "обнаружено воскресенье, выставляю дату". $newdate ."\n";
+	$url= str_replace($old,$newdate,$url);
+}
+else 
+{
+	$newdate = date("d.m.Y");
+	$url =str_replace($old,$newdate,$url);
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	
+	
+	
+}*/
+	$NumberOfPages = 1;
+foreach ($search as $se){
+	
+	$uri = str_replace("%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80",$se,$url);
+	echo $uri;
+	ob_flush();
+	flush();
+	
+			foreach	($sort as $s)
+	{
+	$url1=str_replace("sortBy=UPDATE_DATE",$s,$uri);
+	//echo $url1 . "</br>";
+	$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		
+	if($NumberOfPages>1)
+	{
+		for($i=0;$i<$NumberOfPages;$i++)
+		{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$url2=str_replace($match1,$match,$url1);	
+					echo $url2."</br>";
+		
+		$result = get_web_page($url2);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+					
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+		}
+	}
+	$smeta[] = $smet[2];
+	sleep(rand(3,5));
+	}
+	
+}
+	//$smeta[] = $smet[2];
+	
+	
+?><pre><?print_r($smeta); ?></pre><?
+	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7],$smeta[8],$smeta[9],$smeta[10],$smeta[11],$smeta[12],$smeta[13],$smeta[14],$smeta[15],$smeta[16],$smeta[17],$smeta[18],$smeta[19]);
+
+	
+	
+	$smeta = array_unique($smeta);
+					?><pre><?print_r($smeta); ?></pre><?				
+								
+
+	
+	AutoinputAfterAutoSearch($smeta);
+	echo "Выполнение функции заняло " .$time - time(). " секунд";//выдает милисекунды
+ 	
+}
+function AutoSearchKOM (){
+	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=14.09.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+	
+	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+	$search[]= "%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80"; // арматур
+	$search[]= "%D1%82%D1%80%D1%83%D0%B1"; // труб
+	$search[]= "%D0%BC%D1%83%D1%84%D1%82"; // муфт
+	$search[]= "%D0%BA%D1%80%D0%B0%D0%BD+%D1%88%D0%B0%D1%80"; // кран шар
+	$search[]= "%D1%81%D0%B0%D0%BD%D1%82%D0%B5%D1%85"; // сантех
+	$search[]= "%D0%B4%D0%B5%D1%82%D0%B0%D0%BB+%D1%81%D0%BE%D0%B5%D0%B4"; // детали соед
+	$time =	time();
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	$old = "05.09.2016";
+ $olddate = date("d.m.y.D");
+ $region[] = "5277320"; //Владимирская
+ $region[]= "5277370"; //Нижегородская
+/*if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y', strtotime('-2 day'));
+	echo "обнаружено воскресенье, выставляю дату". $newdate ."\n";
+	$url= str_replace($old,$newdate,$url);
+}
+else 
+{
+	$newdate = date("d.m.Y");
+	$url =str_replace($old,$newdate,$url);
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	
+	
+	
+}*/
+	$NumberOfPages = 1;
+	foreach ($region as $reg){
+		$url = str_replace("5277320",$reg,$url);
+foreach ($search as $se){
+	
+	$uri = str_replace("%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80",$se,$url);
+	
+	
+			foreach	($sort as $s)
+	{
+	$url1=str_replace("sortBy=UPDATE_DATE",$s,$uri);
+	//echo $url1 . "</br>";
+	$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		
+	if($NumberOfPages>1)
+	{
+		for($i=0;$i<$NumberOfPages;$i++)
+		{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$url2=str_replace($match1,$match,$url1);	
+					echo $url2."</br>";
+		
+		$result = get_web_page($url2);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+					
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+		}
+	}
+	$smeta[] = $smet[2];
+	sleep(rand(3,5));
+	}
+	
+	}}
+	//$smeta[] = $smet[2];
+	
+	
+?><pre><?print_r($smeta); ?></pre><?
+	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7],$smeta[8],$smeta[9],$smeta[10],$smeta[11],$smeta[12],$smeta[13],$smeta[14],$smeta[15],$smeta[16],$smeta[17],$smeta[18],$smeta[19],$smeta[20],$smeta[21],$smeta[22],$smeta[23],$smeta[24],$smeta[25],$smeta[26],$smeta[27],$smeta[28],$smeta[29],$smeta[30],$smeta[31],$smeta[32],$smeta[33],$smeta[34],$smeta[35],$smeta[36],$smeta[37],$smeta[38],$smeta[39],$smeta[40],$smeta[41],$smeta[42],$smeta[43],$smeta[44],$smeta[45],$smeta[46],$smeta[47]);
+
+	
+	
+	$smeta = array_unique($smeta);
+					?><pre><?print_r($smeta); ?></pre><?				
+								
+
+	
+	AutoinputAfterAutoSearch($smeta);
+	echo "Выполнение функции заняло " .$time - time(). " секунд";//выдает милисекунды
+ 	
+}
+function AutoSearchKostroma(){
+	$start = microtime(true);
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "06.09.2016";
+	$olddate = date("d.m.y.D");
+		if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y.D', strtotime('-2 day'));
+	echo "Oбнаружено воскресенье, выставляю дату".$newdate."\n";
+	ob_flush();
+	flush();
+	sleep(1);
+	  $url =str_replace($old,$newdate,$url);
+}
+		else 
+{
+	$newdate = date("d.m.Y");
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	ob_flush();
+	flush();
+	sleep(1);
+	
+	
+	$url =str_replace($old,$newdate,$url);
+	
+	
+}
 	
 	$sort[] = "sortBy=UPDATE_DATE";	
 	$sort[] = "sortBy=PUBLISH_DATE";	
 	$sort[] = "sortBy=UPDATE_PRICE";	
 	$sort[] = "sortBy=RELEVANCE";
 	
-foreach	($sort as $s){
-$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
-//echo $url1 . "</br>";
-$result = get_web_page($url1);
+	$NumberOfPages = 1;
+			foreach	($sort as $s)
+	{
+	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
+	//echo $url1 . "</br>";
+	$result = get_web_page($url1);
 			if (($result['errno'] != 0 )||($result['http_code'] != 200))
     {
 				echo $result['errmsg'];
+				
 	}
 			else
 	{
 				$page = $result['content'];
 	}
 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
-	preg_match('/currentPage">(.*)</',$page,$matches);
-	//print_r($match);
-	$match = "{$matches[1]}";
-	while ($match==$replace){
-		
-		//sleep(10);
-		$search = "pageNumber=".$match;
-		$replace++;
-		$replace = "pageNumber=".$replace;
-		$url2=str_replace($match1,$match,$url1);	
-		echo $url2."</br>";
+		$smeta[] = $smet[2];
+	if($NumberOfPages>1)
+	{
+		for($i=2;$i<=$NumberOfPages;$i++)
+		{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$pattern = "pageNumber=1";
+					$url2=str_replace($pattern,$replace,$url1);	
+					echo $url2."</br>";
 		
 		$result = get_web_page($url2);
 			if (($result['errno'] != 0 )||($result['http_code'] != 200))
     {
 				echo $result['errmsg'];
+				
 	}
 			else
 	{
 				$page = $result['content'];
 	}
-	preg_match('/currentPage">(.*)</',$page,$matches);
-	$match = $mathes[1];
-	 
-	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
 		$smeta[]= $smet[2];
-		
+		sleep(rand(3,5));
+		}
 	}
 	
-	$smeta[] = $smet[2];
-	sleep(10);
-}
-
-	//$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
 	
-								
-								
+	sleep(rand(3,5));
+	}
+	
+	//$smeta[] = $smet[2];
+	
+?><pre><?print_r($smeta); ?></pre><?
+if ($NumberOfPages>1){
+	
+
+	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
+}
+else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
+	
+	
+	$smeta = array_unique($smeta);
+										
 	?><pre><?print_r($smeta); ?></pre><?
 	
+	AutoinputAfterAutoSearch($smeta);
+	$time = microtime(true) - $start;
+printf('Скрипт выполнялся %.4F сек.', $time);
+	}
+	function AutosearchJaroslavl(){
+		$start = microtime(true);
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "06.09.2016";
+	$olddate = date("d.m.y.D");
+		if (strpos($olddate,"Sun") == TRUE) {
 	
+	$newdate =date('d.m.Y.D', strtotime('-2 day'));
+	echo "Oбнаружено воскресенье, выставляю дату".$newdate."\n";
+	ob_flush();
+	flush();
+	sleep(1);
+	  $url =str_replace($old,$newdate,$url);
+}
+		else 
+{
+	$newdate = date("d.m.Y");
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	ob_flush();
+	flush();
+	sleep(1);
+	
+	
+	$url =str_replace($old,$newdate,$url);
 	
 	
 }
-function searchASC3 ()
-{
-	$url = "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=26.08.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-		$result = get_web_page($url);
+	
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	
+	$NumberOfPages = 2;
+			foreach	($sort as $s)
+	{
+	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
+	//echo $url1 . "</br>";
+	$result = get_web_page($url1);
 			if (($result['errno'] != 0 )||($result['http_code'] != 200))
     {
 				echo $result['errmsg'];
+				
 	}
 			else
 	{
 				$page = $result['content'];
 	}
+	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[] = $smet[2];
+	if($NumberOfPages>1)
+	{
+		for($i=2;$i<=$NumberOfPages;$i++)
+		{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$pattern = "pageNumber=1";
+					$url2=str_replace($pattern,$replace,$url1);	
+					echo $url2."</br>";
+		
+		$result = get_web_page($url2);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+		sleep(rand(3,5));
+		}
+	}
 	
-								preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
-								$smeta = $smet[2];
-								array_unique($smeta);
+	
+	sleep(rand(3,5));
+	}
+	
+	//$smeta[] = $smet[2];
+	
+?><pre><?print_r($smeta); ?></pre><?
+if ($NumberOfPages>1){
+	
+
+	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
+}
+else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
+	
+	
+	$smeta = array_unique($smeta);
+										
+	?><pre><?print_r($smeta); ?></pre><?
+	
+	AutoinputAfterAutoSearch($smeta);
+	$time = microtime(true) - $start;
+printf('Скрипт выполнялся %.4F сек.', $time);
+	}
+	function AutosearchIvanovo(){
+		$start = microtime(true);
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "06.09.2016";
+	$olddate = date("d.m.y.D");
+		if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y.D', strtotime('-2 day'));
+	echo "Oбнаружено воскресенье, выставляю дату".$newdate."\n";
+	ob_flush();
+	flush();
+	sleep(1);
+	  $url =str_replace($old,$newdate,$url);
+}
+		else 
+{
+	$newdate = date("d.m.Y");
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	ob_flush();
+	flush();
+	sleep(1);
+	
+	
+	$url =str_replace($old,$newdate,$url);
+	
+	
+}
+	
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	
+	$NumberOfPages = 2;
+			foreach	($sort as $s)
+	{
+	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
+	//echo $url1 . "</br>";
+	$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[] = $smet[2];
+	if($NumberOfPages>1)
+	{
+		for($i=2;$i<=$NumberOfPages;$i++)
+		{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$pattern = "pageNumber=1";
+					$url2=str_replace($pattern,$replace,$url1);	
+					echo $url2."</br>";
+		
+		$result = get_web_page($url2);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+		sleep(rand(3,5));
+		}
+	}
+	
+	
+	sleep(rand(3,5));
+	}
+	
+	//$smeta[] = $smet[2];
+	
+?><pre><?print_r($smeta); ?></pre><?
+if ($NumberOfPages>1){
+	
+
+	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
+}
+else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
+	
+	
+	$smeta = array_unique($smeta);
+										
+	?><pre><?print_r($smeta); ?></pre><?
+	
+	AutoinputAfterAutoSearch($smeta);
+	$time = microtime(true) - $start;
+printf('Скрипт выполнялся %.4F сек.', $time);
+	}
+	function AutosearchVologda(){
+		$start = microtime(true);
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "06.09.2016";
+	$olddate = date("d.m.y.D");
+		if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y.D', strtotime('-2 day'));
+	echo "Oбнаружено воскресенье, выставляю дату".$newdate."\n";
+	ob_flush();
+	flush();
+	sleep(1);
+	  $url =str_replace($old,$newdate,$url);
+}
+		else 
+{
+	$newdate = date("d.m.Y");
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	ob_flush();
+	flush();
+	sleep(1);
+	
+	
+	$url =str_replace($old,$newdate,$url);
+	
+	
+}
+	
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	
+	$NumberOfPages = 2;
+			foreach	($sort as $s)
+	{
+	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
+	//echo $url1 . "</br>";
+	$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[] = $smet[2];
+	if($NumberOfPages>1)
+	{
+		for($i=2;$i<=$NumberOfPages;$i++)
+		{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$pattern = "pageNumber=1";
+					$url2=str_replace($pattern,$replace,$url1);	
+					echo $url2."</br>";
+		
+		$result = get_web_page($url2);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+    {
+				echo $result['errmsg'];
+				
+	}
+			else
+	{
+				$page = $result['content'];
+	}
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+		sleep(rand(3,5));
+		}
+	}
+	
+	
+	sleep(rand(3,5));
+	}
+	
+	//$smeta[] = $smet[2];
+	
+?><pre><?print_r($smeta); ?></pre><?
+if ($NumberOfPages>1){
+	
+
+	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
+}
+else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
+	
+	
+	$smeta = array_unique($smeta);
+										
+	?><pre><?print_r($smeta); ?></pre><?
+	
+	AutoinputAfterAutoSearch($smeta);
+	$time = microtime(true) - $start;
+printf('Скрипт выполнялся %.4F сек.', $time);
+	}
+function AutoinputAfterAutoSearch ($smeta)
+{
+	
+								$smeta =array_unique($smeta);
+								//$smeta = ksort($smeta);
 								echo "обнаружено записей" .sizeof($smeta);
 								?><pre><?print_r($smeta); ?></pre><?
-				foreach ($smeta as $parse) // ОНО РАБОТАЕТ УХТЫ кхм... доделать: исключение при З.У.Е.Д , оптимизировать, найти причину переодических сбоев и проскоков в функции , а также понять почему не передавались данные, хотя предположительно нужно просто ретурны поставить...
+				foreach ($smeta as $key=>$parse ) // ОНО РАБОТАЕТ УХТЫ кхм... доделать: исключение при З.У.Е.Д , оптимизировать, найти причину переодических сбоев и проскоков в функции , а также понять почему не передавались данные, хотя предположительно нужно просто ретурны поставить...
 			{
 					if (strpos($parse,"http://zakupki.gov.ru") === FALSE )
 					{
@@ -312,9 +925,10 @@ function searchASC3 ()
 										5 => $arr6[1],
 										6 => $arr8[1]
 														));
-									AutoWriteToFile($arr,$url);
+														
+														AutoWriteToFile($arr,$url);
 								
-										sleep(10);
+										
 					}
 					else 
 					{
@@ -357,12 +971,17 @@ function searchASC3 ()
 									$arr[0][4]= $arr5[2];
 									$arr[0][5]=$arr6[0]=" ";}
 								
-								AutoWriteToFile($arr,$parse);
 								
-								sleep(10);
+														
+				AutoWriteToFile($arr,$url);
+								
+								
 								
 					} 
-					
+				echo $parse . " добавлена, " . " обработано записей " .$key  ." из " . sizeof($smeta) ." </br> " ;	
+				ob_flush();
+				flush();
+				sleep(rand(2,10));
 			}
 			getCSV();
 }

@@ -1,5 +1,4 @@
-﻿
-<form method="POST" action ="index.php" autocomplete="off">
+﻿<form method="POST" action ="index.php" autocomplete="off">
 <p>Ссылку на страницу пажалста</p>
 <input type="text" name = "url"> 
 <input type="text" name = "client" value="1"> 
@@ -20,28 +19,47 @@
 <input type="submit" value = "АСЦ №3" name = "ASC3">
 <input type="submit" value = "КомСистемс" name = "KomSistems">
 <input type="submit" value = "АТЛАС-КАЛУГА" name = "AtlasKaluga">
-<input type="submit" value = "smeta-test" name = "smeta">
 <input type="submit" value = "CSV" name = "CSV">
 <input type="submit" value = "test" name = "autosearch">
+<input type="submit" value = "testATLAS" name = "atlas">
+<input type="submit" value = "testKOM" name = "kom">
+<input type="submit" value = "testKostroma" name = "kostroma">
+<input type="submit" value = "testJarik" name = "autojar">
+<input type="submit" value = "testIvanovo" name = "ivanovo">
+<input type="submit" value = "testvologda" name = "vologda">
 </form>
 <?
 $url = $_POST['url'];
-set_time_limit (600);
+set_time_limit (0);
 include 'functions.php';
 include 'connections.php';
+if ($_POST['ivanovo']){
+	AutoSearchIvanovo();
+}
+if ($_POST['vologda']){
+	AutoSearchVologda();
+}
+if ($_POST['autojar']){
+	AutoSearchJaroslavl();
+}
 if ($_POST['autosearch']){
-	AutoSearch();
+	AutoSearchASC3();
 }
 if ($_POST['CSV']){
 	getCSV();
 }
-if ($_POST['smeta']){
-	searchASC3();
+
+if ($_POST['atlas']){
+	AutoSearchATLAS();
 }
 //$arr7[0] = $_POST['url'];
 //array_push($arr[0],$arr7[0]);
-
-
+if ($_POST['kom']){
+	AutoSearchKOM();
+}
+if ($_POST['kostroma']){
+	AutoSearchKostroma();
+}
 
 if ($_POST['Master']){	$_POST['client']=$_POST['Master'];WriteToFile($arr);} 
 if ($_POST['Omega']){	$_POST['client']=$_POST['Omega'];	WriteToFile($arr);}
