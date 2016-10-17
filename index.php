@@ -19,6 +19,7 @@
 <input type="submit" value = "АСЦ №3" name = "ASC3">
 <input type="submit" value = "КомСистемс" name = "KomSistems">
 <input type="submit" value = "АТЛАС-КАЛУГА" name = "AtlasKaluga">
+</br>
 <input type="submit" value = "CSV" name = "CSV">
 <input type="submit" value = "test" name = "autosearch">
 <input type="submit" value = "testATLAS" name = "atlas">
@@ -27,6 +28,12 @@
 <input type="submit" value = "testJarik" name = "autojar">
 <input type="submit" value = "testIvanovo" name = "ivanovo">
 <input type="submit" value = "testvologda" name = "vologda">
+<input type="submit" value = "Excel ASC3" name = "ASC">
+<input type="submit" value = "Kostroma" name = "kostromaEx">
+<input type="submit" value = "Jaric" name = "jaricEx">
+<input type="submit" value = "IvanovoEX" name = "IvanovoEX">
+<input type="submit" value = "VologdaEx" name = "VologdaEx">
+
 </form>
 <?
 $url = $_POST['url'];
@@ -60,7 +67,21 @@ if ($_POST['kom']){
 if ($_POST['kostroma']){
 	AutoSearchKostroma();
 }
-
+if ($_POST['ASC']){
+	ASC3();
+}
+if ($_POST['kostromaEx']){
+	Kostroma();
+}
+if ($_POST['jaricEx']){
+	Jaroslavl();
+}
+if ($_POST['IvanovoEX']){
+	Ivanovo();
+}
+if ($_POST['VologdaEx']){
+	Vologda();
+}
 if ($_POST['Master']){	$_POST['client']=$_POST['Master'];WriteToFile($arr);} 
 if ($_POST['Omega']){	$_POST['client']=$_POST['Omega'];	WriteToFile($arr);}
 if ($_POST['Kasianova']){	$_POST['client']=$_POST['Kasianova'];$arr[0][5]=$arr[0][6];WriteToFile($arr);}//начинать отсюда

@@ -16,9 +16,9 @@ function AutoDetectLaw ($url,$page)
 
 else fz44($page);
 }
-function AutoWriteToFile ($arr,$parse)
+function AutoWriteToFile ($arr_final)
 {
-	$arr_final[0][0]=$parse;//razobratsa s HYPERLINK
+	/*$arr_final[0][0]=$parse;//razobratsa s HYPERLINK
 	$arr_final[0][1]="1"; 
 	$arr_final[0][2]=$arr[0][0];	
 	$arr_final[0][3]=$arr[0][5];
@@ -26,7 +26,7 @@ function AutoWriteToFile ($arr,$parse)
 	$arr_final[0][5]=$arr[0][3];
 	$arr_final[0][6]=$arr[0][2];
 	$arr_final[0][7]=$arr[0][4];
-	
+	*/
 	
 			$fp = fopen('tender.csv','a');
 			
@@ -191,7 +191,7 @@ function fz223($page,$page1)
 }
 function AutoSearchASC3 (){
 	$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=14.09.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	/*$old = "31.08.2016";
 	$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
@@ -270,20 +270,23 @@ function AutoSearchASC3 (){
 	//$smeta[] = $smet[2];
 	
 ?><pre><?print_r($smeta); ?></pre><?
-
-	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
-	$smeta = array_unique($smeta);
+$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	//$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
+	//$smeta = array_unique($smeta);
+	$result = array_unique($result);
 								
 								
-	?><pre><?print_r($smeta); ?></pre><?
+	?><pre><?print_r($result); ?></pre><?
 	
-	AutoinputAfterAutoSearch($smeta);
+	AutoinputAfterAutoSearch($result);
 	$time = microtime(true) - $start;
-printf('Скрипт выполнялся %.4F сек.', $time);
+printf('Скрипт выполнялся %.4F сек.', $time/60);
  	
 }
 function AutoSearchATLAS (){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=14.09.2016&publishDateTo=&regions=5277323&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277323&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	
 	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
 	$search[]= "%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80"; // инженер
@@ -384,7 +387,7 @@ foreach ($search as $se){
  	
 }
 function AutoSearchKOM (){
-	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=14.09.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	
 	
 	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
@@ -475,24 +478,26 @@ foreach ($search as $se){
 	
 	
 ?><pre><?print_r($smeta); ?></pre><?
-	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7],$smeta[8],$smeta[9],$smeta[10],$smeta[11],$smeta[12],$smeta[13],$smeta[14],$smeta[15],$smeta[16],$smeta[17],$smeta[18],$smeta[19],$smeta[20],$smeta[21],$smeta[22],$smeta[23],$smeta[24],$smeta[25],$smeta[26],$smeta[27],$smeta[28],$smeta[29],$smeta[30],$smeta[31],$smeta[32],$smeta[33],$smeta[34],$smeta[35],$smeta[36],$smeta[37],$smeta[38],$smeta[39],$smeta[40],$smeta[41],$smeta[42],$smeta[43],$smeta[44],$smeta[45],$smeta[46],$smeta[47]);
-
+		$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
 	
-	
-	$smeta = array_unique($smeta);
-					?><pre><?print_r($smeta); ?></pre><?				
+	$result = array_unique($result);
+								
+								
+					?><pre><?print_r($result); ?></pre><?				
 								
 
 	
-	AutoinputAfterAutoSearch($smeta);
+	AutoinputAfterAutoSearch($result);
 	echo "Выполнение функции заняло " .$time - time(). " секунд";//выдает милисекунды
  	
 }
 function AutoSearchKostroma(){
 	$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "06.09.2016";
-	$olddate = date("d.m.y.D");
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "15.10.2016";
+	/*$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
 	
 	$newdate =date('d.m.Y.D', strtotime('-2 day'));
@@ -514,14 +519,14 @@ function AutoSearchKostroma(){
 	$url =str_replace($old,$newdate,$url);
 	
 	
-}
+}*/
 	
 	$sort[] = "sortBy=UPDATE_DATE";	
 	$sort[] = "sortBy=PUBLISH_DATE";	
 	$sort[] = "sortBy=UPDATE_PRICE";	
 	$sort[] = "sortBy=RELEVANCE";
 	
-	$NumberOfPages = 1;
+	$NumberOfPages = 3;
 			foreach	($sort as $s)
 	{
 	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
@@ -572,27 +577,145 @@ function AutoSearchKostroma(){
 	//$smeta[] = $smet[2];
 	
 ?><pre><?print_r($smeta); ?></pre><?
-if ($NumberOfPages>1){
+$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	//$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
+	//$smeta = array_unique($smeta);
+	$result = array_unique($result);
+								
+								
+	?><pre><?print_r($result); ?></pre><?
 	
-
-	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
-}
-else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
-	
-	
-	$smeta = array_unique($smeta);
-										
-	?><pre><?print_r($smeta); ?></pre><?
-	
-	AutoinputAfterAutoSearch($smeta);
+	AutoinputAfterAutoSearch($result);
 	$time = microtime(true) - $start;
 printf('Скрипт выполнялся %.4F сек.', $time);
 	}
+	function AutoSearchKrigin (){
+	$start = microtime(true);
+	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BE%D0%BA%D0%BE%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=90000&priceTo=5000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+
+	
+	
+	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+	$search[]= "%D0%BE%D0%BA%D0%BE%D0%BD"; // окон
+	$search[]= "%D0%B4%D0%B2%D0%B5%D1%80"; // двер
+	$search[]= "%D0%BF%D0%B2%D1%85"; // пвх
+	$search[]= "%D0%B0%D0%BB%D1%8E%D0%BC%D0%B8%D0%BD"; // алюмин
+	$search[]= "%D0%B2%D0%B8%D1%82%D1%80%D0%B0%D0%B6"; // витраж
+	$search[]= "%D0%B2%D1%85%D0%BE%D0%B4%D0%BD+%D0%B3%D1%80%D1%83%D0%BF"; // входн груп
+	$search[]= "%D1%84%D0%B0%D1%81%D0%B0%D0%B4"; // фасад
+	$search[]= "%D0%BE%D1%81%D1%82%D0%B5%D0%BA%D0%BB"; // остекл
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	$old = "05.09.2016";
+ $olddate = date("d.m.y.D");
+ $region[] = "5277320"; //Владимирская
+ $region[]= "5277330"; //смоленская
+ $region[]= "5277334"; //ярик
+ $region[]= "5277333"; //тула
+ $region[]= "5277327"; //мос обл
+ $region[]= "5277335"; //мск
+/*if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y', strtotime('-2 day'));
+	echo "обнаружено воскресенье, выставляю дату". $newdate ."\n";
+	$url= str_replace($old,$newdate,$url);
+}
+else 
+{
+	$newdate = date("d.m.Y");
+	$url =str_replace($old,$newdate,$url);
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	
+	
+	
+}*/
+	$NumberOfPages = 1;
+foreach ($region as $reg)
+{
+		$url2 = str_replace("5277320",$reg,$url);
+	foreach ($search as $se)
+	{
+	
+		$uri = str_replace("%D0%BE%D0%BA%D0%BE%D0%BD",$se,$url2);
+	
+		echo $uri . "</br>";
+		ob_flush();
+		flush();
+		foreach	($sort as $s)
+		{
+		$url1=str_replace("sortBy=UPDATE_DATE",$s,$uri);
+		//echo $url1 . "</br>";
+		$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+		{
+				echo $result['errmsg'];
+				
+		}
+			else
+		{
+				$page = $result['content'];
+		}
+				preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		
+			if($NumberOfPages>1)
+		{
+			for($i=0;$i<$NumberOfPages;$i++)
+			{
+					sleep(rand(3,5));
+					$replace = "pageNumber=".$i;
+					$url2=str_replace($match1,$match,$url1);	
+					echo $url2."</br>";
+		
+		$result = get_web_page($url2);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+				{
+				echo $result['errmsg'];
+					
+				}
+			else
+				{
+				$page = $result['content'];
+				}
+
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+			}
+	}
+	$smeta[] = $smet[2];
+	sleep(rand(3,5));
+}
+	
+}
+}
+	//$smeta[] = $smet[2];
+	
+	
+?><pre><?print_r($smeta); ?></pre><?
+	$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	
+	$result = array_unique($result);
+								
+								
+					?><pre><?print_r($result); ?></pre><?				
+								
+
+	
+	AutoinputAfterAutoSearch($result);
+	$time = microtime(true) - $start;
+printf('Скрипт выполнялся %.4F сек.', $time/60);
+ 	
+}
 	function AutosearchJaroslavl(){
 		$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "06.09.2016";
-	$olddate = date("d.m.y.D");
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "15.10.2016";
+	/*$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
 	
 	$newdate =date('d.m.Y.D', strtotime('-2 day'));
@@ -614,14 +737,14 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	$url =str_replace($old,$newdate,$url);
 	
 	
-}
+}*/
 	
 	$sort[] = "sortBy=UPDATE_DATE";	
 	$sort[] = "sortBy=PUBLISH_DATE";	
 	$sort[] = "sortBy=UPDATE_PRICE";	
 	$sort[] = "sortBy=RELEVANCE";
 	
-	$NumberOfPages = 2;
+	$NumberOfPages = 4;
 			foreach	($sort as $s)
 	{
 	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
@@ -672,28 +795,26 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	//$smeta[] = $smet[2];
 	
 ?><pre><?print_r($smeta); ?></pre><?
-if ($NumberOfPages>1){
+$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	//$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
+	//$smeta = array_unique($smeta);
+	$result = array_unique($result);
+								
+								
+	?><pre><?print_r($result); ?></pre><?
 	
-
-	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
-}
-else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
-	
-	
-	$smeta = array_unique($smeta);
-										
-	?><pre><?print_r($smeta); ?></pre><?
-	
-	AutoinputAfterAutoSearch($smeta);
+	AutoinputAfterAutoSearch($result);
 	$time = microtime(true) - $start;
 printf('Скрипт выполнялся %.4F сек.', $time);
 	}
 	function AutosearchIvanovo(){
 		$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "06.09.2016";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "15.10.2016";
 	$olddate = date("d.m.y.D");
-		if (strpos($olddate,"Sun") == TRUE) {
+		/*if (strpos($olddate,"Sun") == TRUE) {
 	
 	$newdate =date('d.m.Y.D', strtotime('-2 day'));
 	echo "Oбнаружено воскресенье, выставляю дату".$newdate."\n";
@@ -714,14 +835,14 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	$url =str_replace($old,$newdate,$url);
 	
 	
-}
+}*/
 	
 	$sort[] = "sortBy=UPDATE_DATE";	
 	$sort[] = "sortBy=PUBLISH_DATE";	
 	$sort[] = "sortBy=UPDATE_PRICE";	
 	$sort[] = "sortBy=RELEVANCE";
 	
-	$NumberOfPages = 2;
+	$NumberOfPages = 3;
 			foreach	($sort as $s)
 	{
 	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
@@ -772,27 +893,25 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	//$smeta[] = $smet[2];
 	
 ?><pre><?print_r($smeta); ?></pre><?
-if ($NumberOfPages>1){
+$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	//$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
+	//$smeta = array_unique($smeta);
+	$result = array_unique($result);
+								
+								
+	?><pre><?print_r($result); ?></pre><?
 	
-
-	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
-}
-else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
-	
-	
-	$smeta = array_unique($smeta);
-										
-	?><pre><?print_r($smeta); ?></pre><?
-	
-	AutoinputAfterAutoSearch($smeta);
+	AutoinputAfterAutoSearch($result);
 	$time = microtime(true) - $start;
 printf('Скрипт выполнялся %.4F сек.', $time);
 	}
 	function AutosearchVologda(){
 		$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=06.09.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "06.09.2016";
-	$olddate = date("d.m.y.D");
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "15.10.2016";
+	/*$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
 	
 	$newdate =date('d.m.Y.D', strtotime('-2 day'));
@@ -815,13 +934,13 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	
 	
 }
-	
+	*/
 	$sort[] = "sortBy=UPDATE_DATE";	
 	$sort[] = "sortBy=PUBLISH_DATE";	
 	$sort[] = "sortBy=UPDATE_PRICE";	
 	$sort[] = "sortBy=RELEVANCE";
 	
-	$NumberOfPages = 2;
+	$NumberOfPages = 4;
 			foreach	($sort as $s)
 	{
 	$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
@@ -872,19 +991,17 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	//$smeta[] = $smet[2];
 	
 ?><pre><?print_r($smeta); ?></pre><?
-if ($NumberOfPages>1){
+$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	//$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);
+	//$smeta = array_unique($smeta);
+	$result = array_unique($result);
+								
+								
+	?><pre><?print_r($result); ?></pre><?
 	
-
-	$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3],$smeta[4],$smeta[5],$smeta[6],$smeta[7]);
-}
-else {$smeta = array_merge($smeta[0],$smeta[1],$smeta[2],$smeta[3]);}
-	
-	
-	$smeta = array_unique($smeta);
-										
-	?><pre><?print_r($smeta); ?></pre><?
-	
-	AutoinputAfterAutoSearch($smeta);
+	AutoinputAfterAutoSearch($result);
 	$time = microtime(true) - $start;
 printf('Скрипт выполнялся %.4F сек.', $time);
 	}
@@ -895,7 +1012,8 @@ function AutoinputAfterAutoSearch ($smeta)
 								//$smeta = ksort($smeta);
 								echo "обнаружено записей" .sizeof($smeta);
 								?><pre><?print_r($smeta); ?></pre><?
-				foreach ($smeta as $key=>$parse ) // ОНО РАБОТАЕТ УХТЫ кхм... доделать: исключение при З.У.Е.Д , оптимизировать, найти причину переодических сбоев и проскоков в функции , а также понять почему не передавались данные, хотя предположительно нужно просто ретурны поставить...
+								$i=1;
+				foreach ($smeta as $key=>$parse ) // доделать: исключение при З.У.Е.Д , оптимизировать
 			{
 					if (strpos($parse,"http://zakupki.gov.ru") === FALSE )
 					{
@@ -912,21 +1030,23 @@ function AutoinputAfterAutoSearch ($smeta)
 										preg_match('/цена контракта.*?<td>\s*(.*?)\s*</s',$page,$arr5);?><br/><?
 										//preg_match_all('/цена контракта(.*\n)(.*<td>)(.*)(<)/',$page,$arr5);?><br/><?
 										preg_match("/Источник финансирования.*?<td>\s*(.*?)\s*</s",$page,$arr6);?><br/><? 
-										preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}\s\d{2}:\d{2})/s",$page,$arr8);	
+										//preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}\s\d{2}:\d{2})/s",$page,$arr8);	
 
 		
 						$arr= array(
 									array(
-										0 => $arr1[1],
-										1 => $arr2[4],
-										2 => $arr3[1],
-										3 => $arr4[2][0],
-										4 => $arr5[1],
-										5 => $arr6[1],
-										6 => $arr8[1]
-														));
-														
-														AutoWriteToFile($arr,$url);
+																			
+										0 => $url,
+										1 => "1",
+										2 => $arr1[1],
+										3 => $arr6[1],
+										4 => $arr2[4],
+										5 => $arr4[2][0],
+										6 => $arr3[1],
+										7 => $arr5[1]
+										));
+													$arr_final[]=$arr[0];	
+														//AutoWriteToFile($arr,$url);
 								
 										
 					}
@@ -946,47 +1066,318 @@ function AutoinputAfterAutoSearch ($smeta)
 									preg_match('/Способ размещения закупки.*(\n.*)(\n\s+)(.*\S+)/',$page,$arr2);
 									preg_match('/Наименование закупки<\/td>\s*<td>\s+(.*)\S+/',$page,$arr3);//должно работать, проверить
 									preg_match('/Адрес места нахождения(.*\n.*?<td>.+?,)(.+?),.*/',$page,$arr4);
-									preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}.*?\s\d{2}:\d{2})/s",$page,$arr8);
+									//preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}.*?\s\d{2}:\d{2})/s",$page,$arr8);
 									preg_match ('/(\s+)([\d\s\d]+\S\d+.*?)&nbsp;Российский рубль/',$page1,$arr5);//
 									preg_match ('/записей:.*?<strong>(.*?)\s*</',$page1,$lots);
 
 				$arr= array(
 							array(
-									0 => $arr1[1],
-									1 => $arr2[3],
-									2 => $arr3[1],
-									3 => $arr4[2],
-									6 => $arr8[1]
-														));
+									
+									0 => $parse,				
+									1 => "1",				
+									2 => $arr1[1],				
+									3 => "",				
+									4 => $arr2[3],				
+									5 => $arr4[2],				
+									6 => $arr3[1]				
+													));
 
 			if ($lots[1]>1)
 {
 									$lots1[0]= "лотов";
 									$lots[1].=$lots1[0];
 									$arr5[2]= $lots[1];
-									$arr[0][4] = $arr5[2];	
+									$arr[0][7] = $arr5[2];	
 
 }
 			else {
-									$arr[0][4]= $arr5[2];
-									$arr[0][5]=$arr6[0]=" ";}
+									$arr[0][7]= $arr5[2];
+									//$arr[0][5]=$arr6[0]="";
+									}
 								
-								
+								$arr_final[] = $arr[0];
 														
-				AutoWriteToFile($arr,$url);
+				//AutoWriteToFile($arr,$url);
 								
 								
 								
 					} 
-				echo $parse . " добавлена, " . " обработано записей " .$key  ." из " . sizeof($smeta) ." </br> " ;	
+				echo $parse . " добавлена, " . " обработано записей " .$i ." из " . sizeof($smeta) ." </br> " ;	
 				ob_flush();
 				flush();
+				$i++;
 				sleep(rand(2,10));
 			}
+			
+			//return $arr_final;
+			AutoWriteToFile($arr_final);
+			//ExcelInput($arr_final);
 			getCSV();
 }
+function SingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=1,$Fname)//для поиска где не нужно менять ключевые слова(смета,кострома,ярик,иваново,вологда)
+{ 
+	$start = microtime(true);
+	/*$old = "31.08.2016";
+	$olddate = date("d.m.y.D");
+		if (strpos($olddate,"Sun") == TRUE) {
+	
+	$newdate =date('d.m.Y.D', strtotime('-2 day'));
+	echo "обнаружено воскресенье, выставляю дату".$newdate."\n";
+	ob_flush();
+	flush();
+	sleep(1);
+	  str_replace($old,$newdate,$url);
+}
+		else 
+{
+	$newdate = date("d.m.Y");
+	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+	ob_flush();
+	flush();
+	sleep(1);
+	
+	
+	str_replace($old,$newdate,$url);
+	
+	
+}*/
+	
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	
+	
+	
+		foreach	($sort as $s)
+{
+		$url1=str_replace("sortBy=UPDATE_DATE",$s,$url);
+	
+		$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+				{
+				echo $result['errmsg'];
+				}
+			else
+				{
+				$page = $result['content'];
+				}
+		preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[] = $smet[2];
+				if($NumberOfPages>1)
+					{
+						for($i=2;$i<=$NumberOfPages;$i++)
+						{
+							sleep(rand(4,7));
+							$replace = "pageNumber=".$i;
+							$pattern = "pageNumber=1";
+							$url2=str_replace($pattern,$replace,$url1);	
+							echo $url2."</br>";
+		
+							$result = get_web_page($url2);
+								if (($result['errno'] != 0 )||($result['http_code'] != 200))
+									{
+										echo $result['errmsg'];
+				
+									}
+								else
+									{
+										$page = $result['content'];
+									}
 
+							preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+							$smeta[]= $smet[2];
+							sleep(rand(3,5));
+						}
+					}
+		
+		sleep(rand(10,30));
+}
 	
 	
 	
+?><pre><?print_r($smeta); ?></pre><?
+		$result = array(); 
+		foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	
+	$result = array_unique($result);
+								
+								
+?><pre><?print_r($result); ?></pre><?
+	
+	
+ 	GatherLinks($result,$name_sheet,$active_sheet,$Fname);
+	
+	$time = microtime(true) - $start;
+	printf('Скрипт выполнялся %.2F мин.', $time/60);
+}
+function ASC3(){
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$active_sheet = 0;
+	$name_sheet = "Smeta";
+	$Fname="ASC3";
+	$NumberOfPages = 1;
+	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
+}
+function Kostroma(){
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$active_sheet = 0;
+	$name_sheet = "Kostroma";
+	$NumberOfPages = 4;
+	$Fname="Kostroma";
+	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
+}
+function Jaroslavl(){
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$active_sheet = 0;
+	$name_sheet = "Jaroslavl";
+	$NumberOfPages= 5;
+	$Fname= "Jaroslavl";
+	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
+}
+function Ivanovo(){
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$active_sheet = 0;
+	$name_sheet = "Ivanovo";
+	$NumberOfPages= 4;
+	$Fname= "Ivanovo";
+	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
+}
+function Vologda(){
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$active_sheet = 0;
+	$name_sheet = "Vologda";
+	$NumberOfPages= 4;
+	$Fname= "Vologda";
+	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
+}
+function ExcelInput($arr_final,$active_sheet=0,$name_sheet="TestSmeta",$Fname="tenders",$i=1){
+	?><pre><?print_r($arr_final);?></pre><?
+require_once ('PHPExcel.php');
+require_once('PHPExcel/Writer/Excel5.php');
+	$xls = new PHPExcel();//РАБОТАЕТ, добавить к основе 
+		$xls->setActiveSheetIndex($active_sheet); // можно передавать индекс в функцию вместо велосипедов
+		$sheet = $xls->getActiveSheet();
+		$sheet->setTitle($name_sheet);
+		foreach($arr_final as $value){
+		$sheet->setCellValue('A'.$i, $value[0]);
+		$sheet->setCellValue('B'.$i, $value[1]);
+		$sheet->setCellValue('C'.$i, $value[2]);
+		$sheet->setCellValue('D'.$i, $value[3]);
+		$sheet->setCellValue('E'.$i, $value[4]);
+		$sheet->setCellValue('F'.$i, $value[5]);
+		$sheet->setCellValue('G'.$i, $value[6]);
+		$sheet->setCellValue('H'.$i, $value[7]);
+		$sheet->getCell('A'.$i)->getHyperlink()->setUrl($value[0]);
+		$i++;
+		}
+		$objWriter = new PHPExcel_Writer_Excel5($xls);
+			$objWriter->save($Fname.'.xls');
+}
+function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname)
+{
+	
+								$smeta =array_unique($smeta);
+								echo "обнаружено записей" .sizeof($smeta);
+								?><pre><?print_r($smeta); ?></pre><?
+								$i = 1;
+				foreach ($smeta as $parse ) // З.У.Е.Д будет через БД или др способ
+			{
+					if (strpos($parse,"http://zakupki.gov.ru") === FALSE )
+					{
+								$add = "http://zakupki.gov.ru";
+								$url =$add.$parse;
+								$res = get_web_page ($url);
+								$page = $res['content'];
+								
+										preg_match	('/Размещено:(.\d{2}\.\d{2}\.\d{4})/',$page,$arr1); ?><br/><?
+										preg_match('/Способ определения поставщика (.*\n[^)])(\s+)(<td>)(.*)(<)/',$page,$arr2);
+										preg_match('/"notice_orderName">(.*)</',$page,$arr3);
+										preg_match_all('/Место нахождения(.*\n.*?<td>.+?,.+?,)(.+?),.*/',$page,$arr4);?><br/><?
+										preg_match('/цена контракта.*?<td>\s*(.*?)\s*</s',$page,$arr5);?><br/><?
+										preg_match("/Источник финансирования.*?<td>\s*(.*?)\s*</s",$page,$arr6);?><br/><? 
+											
+
+		
+						$arr= array(
+									array(
+																			
+										0 => $url,
+										1 => "1",
+										2 => $arr1[1],
+										3 => $arr6[1],
+										4 => $arr2[4],
+										5 => $arr4[2][0],
+										6 => $arr3[1],
+										7 => $arr5[1]
+										));
+													$arr_final[]=$arr[0];	
+														
+								
+										
+					}
+					else 
+					{
+								$res = get_web_page ($parse);
+								$page = $res['content'];
+								$data ='http://zakupki.gov.ru/223/purchase/public/purchase/info/';
+								$data2='&epz=true&style44=false';
+								$data1='lot-list.html?noticeId=';
+								preg_match_all("/\d+/",$parse,$arr1);
+								$url = $data . $data1 . $arr1[0][1] . $data2;
+								$result1 = get_web_page($url);
+								$page1 = $result1['content'];
+								
+									preg_match('/Размещено(.\d{2}\.\d{2}\.\d{4})/',$page,$arr1);?><br/><?
+									preg_match('/Способ размещения закупки.*(\n.*)(\n\s+)(.*\S+)/',$page,$arr2);
+									preg_match('/Наименование закупки<\/td>\s*<td>\s+(.*)\S+/',$page,$arr3);//должно работать, проверить
+									preg_match('/Адрес места нахождения(.*\n.*?<td>.+?,)(.+?),.*/',$page,$arr4);
+									preg_match ('/(\s+)([\d\s\d]+\S\d+.*?)&nbsp;Российский рубль/',$page1,$arr5);//
+									preg_match ('/записей:.*?<strong>(.*?)\s*</',$page1,$lots);
+
+				$arr= array(
+							array(
+									
+									0 => $parse,				
+									1 => "1",				
+									2 => $arr1[1],				
+									3 => "",				
+									4 => $arr2[3],				
+									5 => $arr4[2],				
+									6 => $arr3[1]				
+													));
+
+			if ($lots[1]>1)
+{
+									$lots1[0]= "лотов";
+									$lots[1].=$lots1[0];
+									$arr5[2]= $lots[1];
+									$arr[0][7] = $arr5[2];	
+
+}
+			else {
+									$arr[0][7]= $arr5[2];
+									//$arr[0][5]=$arr6[0]="";
+									}
+								
+								$arr_final[] = $arr[0];
+														
+				
+								
+								
+								
+					} 
+				echo $parse . " добавлена, " . " обработано записей " .$i  ." из " . sizeof($smeta) ." </br> " ;	
+				ob_flush();
+				flush();
+				$i++;
+				sleep(rand(5,20));
+			}
+			
+			ExcelInput($arr_final,$active_sheet,$name_sheet,$Fname);
+			
+		
+			
+}	
 

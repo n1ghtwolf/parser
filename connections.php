@@ -14,7 +14,7 @@ function get_web_page( $url )
   curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120); // таймаут соединения
   curl_setopt($ch, CURLOPT_TIMEOUT, 120);        // таймаут ответа
   curl_setopt($ch, CURLOPT_MAXREDIRS, 10);       // останавливаться после 10-ого редиректа
-
+  //curl_setopt($ch, CURLOPT_PROXY, '85.26.146.169:80');
   $content = curl_exec( $ch );
   $err     = curl_errno( $ch );
   $errmsg  = curl_error( $ch );
