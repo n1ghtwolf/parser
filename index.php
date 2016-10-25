@@ -33,6 +33,7 @@
 <input type="submit" value = "Jaric" name = "jaricEx">
 <input type="submit" value = "IvanovoEX" name = "IvanovoEX">
 <input type="submit" value = "VologdaEx" name = "VologdaEx">
+<input type="submit" value = "KomSistemsEx" name = "KomSistemsEx">
 
 </form>
 <?
@@ -81,6 +82,9 @@ if ($_POST['IvanovoEX']){
 }
 if ($_POST['VologdaEx']){
 	Vologda();
+}
+if ($_POST['KomSistemsEx']){
+	KomSistemEx();
 }
 if ($_POST['Master']){	$_POST['client']=$_POST['Master'];WriteToFile($arr);} 
 if ($_POST['Omega']){	$_POST['client']=$_POST['Omega'];	WriteToFile($arr);}

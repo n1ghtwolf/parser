@@ -191,7 +191,7 @@ function fz223($page,$page1)
 }
 function AutoSearchASC3 (){
 	$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	/*$old = "31.08.2016";
 	$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
@@ -286,7 +286,7 @@ printf('Скрипт выполнялся %.4F сек.', $time/60);
  	
 }
 function AutoSearchATLAS (){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277323&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277323&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	
 	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
 	$search[]= "%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80"; // инженер
@@ -387,7 +387,7 @@ foreach ($search as $se){
  	
 }
 function AutoSearchKOM (){
-	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	
 	
 	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
@@ -495,8 +495,8 @@ foreach($smeta as $v)
 }
 function AutoSearchKostroma(){
 	$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "15.10.2016";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "24.10.2016";
 	/*$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
 	
@@ -593,7 +593,7 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	}
 	function AutoSearchKrigin (){
 	$start = microtime(true);
-	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BE%D0%BA%D0%BE%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=90000&priceTo=5000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BE%D0%BA%D0%BE%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=90000&priceTo=5000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 
 	
 	
@@ -713,8 +713,8 @@ printf('Скрипт выполнялся %.4F сек.', $time/60);
 }
 	function AutosearchJaroslavl(){
 		$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "15.10.2016";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "24.10.2016";
 	/*$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
 	
@@ -811,8 +811,8 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	}
 	function AutosearchIvanovo(){
 		$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "15.10.2016";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "24.10.2016";
 	$olddate = date("d.m.y.D");
 		/*if (strpos($olddate,"Sun") == TRUE) {
 	
@@ -909,8 +909,8 @@ printf('Скрипт выполнялся %.4F сек.', $time);
 	}
 	function AutosearchVologda(){
 		$start = microtime(true);
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$old = "15.10.2016";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$old = "24.10.2016";
 	/*$olddate = date("d.m.y.D");
 		if (strpos($olddate,"Sun") == TRUE) {
 	
@@ -1187,11 +1187,11 @@ function SingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=1,$Fnam
 
 							preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
 							$smeta[]= $smet[2];
-							sleep(rand(3,5));
+							sleep(rand(6,9));
 						}
 					}
 		
-		sleep(rand(10,30));
+		sleep(rand(15,30));
 }
 	
 	
@@ -1213,7 +1213,7 @@ function SingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=1,$Fnam
 	printf('Скрипт выполнялся %.2F мин.', $time/60);
 }
 function ASC3(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	$active_sheet = 0;
 	$name_sheet = "Smeta";
 	$Fname="ASC3";
@@ -1221,7 +1221,7 @@ function ASC3(){
 	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
 }
 function Kostroma(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	$active_sheet = 0;
 	$name_sheet = "Kostroma";
 	$NumberOfPages = 4;
@@ -1229,28 +1229,53 @@ function Kostroma(){
 	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
 }
 function Jaroslavl(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	$active_sheet = 0;
 	$name_sheet = "Jaroslavl";
-	$NumberOfPages= 5;
+	$NumberOfPages= 3;
 	$Fname= "Jaroslavl";
 	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
 }
 function Ivanovo(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	$active_sheet = 0;
 	$name_sheet = "Ivanovo";
-	$NumberOfPages= 4;
+	$NumberOfPages= 2;
 	$Fname= "Ivanovo";
 	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
 }
 function Vologda(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=15.10.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 	$active_sheet = 0;
 	$name_sheet = "Vologda";
 	$NumberOfPages= 4;
 	$Fname= "Vologda";
 	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
+}
+function KomSistemEx(){
+	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=24.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+	$str_replace_region = "5277320";
+	$str_replace_search = "%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80";
+	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+	$search[]= "%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80"; // арматур
+	$search[]= "%D1%82%D1%80%D1%83%D0%B1"; // труб
+	$search[]= "%D0%BC%D1%83%D1%84%D1%82"; // муфт
+	$search[]= "%D0%BA%D1%80%D0%B0%D0%BD+%D1%88%D0%B0%D1%80"; // кран шар
+	$search[]= "%D1%81%D0%B0%D0%BD%D1%82%D0%B5%D1%85"; // сантех
+	$search[]= "%D0%B4%D0%B5%D1%82%D0%B0%D0%BB+%D1%81%D0%BE%D0%B5%D0%B4"; // детали соед
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	$region[] = "5277320"; //Владимирская
+    $region[]= "5277370"; //Нижегородская
+	$active_sheet = 0;
+	$name_sheet = "KomSistemEx";
+	//$NumberOfPages= 2;
+	$Fname= "KomSistemEx";
+	MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region,$NumberOfPages=2);
+	
 }
 function ExcelInput($arr_final,$active_sheet=0,$name_sheet="TestSmeta",$Fname="tenders",$i=1){
 	?><pre><?print_r($arr_final);?></pre><?
@@ -1380,4 +1405,90 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname)
 		
 			
 }	
+function MultiLine ($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region,$NumberOfPages=1){
+	$start = microtime(true);
+	
+	
+	$sort[] = "sortBy=UPDATE_DATE";	
+	$sort[] = "sortBy=PUBLISH_DATE";	
+	$sort[] = "sortBy=UPDATE_PRICE";	
+	$sort[] = "sortBy=RELEVANCE";
+	
+	
+foreach ($region as $reg)
+{
+		$url2 = str_replace($str_replace_region,$reg,$url);
+	foreach ($search as $se)
+	{
+	
+		$uri = str_replace($str_replace_search,$se,$url2);
+	
+		echo $uri . "</br>";
+		ob_flush();
+		flush();
+		foreach	($sort as $s)
+		{
+		$url1=str_replace("sortBy=UPDATE_DATE",$s,$uri);
+		echo $url1 . "</br>";
+		$result = get_web_page($url1);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+		{
+				echo $result['errmsg'];
+				
+		}
+			else
+		{
+				$page = $result['content'];
+		}
+				preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[] = $smet[2];
+			if($NumberOfPages>1)
+		{
+			for($i=0;$i<$NumberOfPages;$i++)
+			{
+					sleep(rand(5,7));
+					$replace = "pageNumber=".$i;
+					$url3=str_replace($match1,$match,$url1);	
+					echo $url3."</br>";
+		
+		$result = get_web_page($url3);
+			if (($result['errno'] != 0 )||($result['http_code'] != 200))
+				{
+				echo $result['errmsg'];
+					
+				}
+			else
+				{
+				$page = $result['content'];
+				}
 
+	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+		$smeta[]= $smet[2];
+			}
+	}
+	
+	sleep(rand(5,7));
+}
+	
+}
+}
+	
+	
+	
+?><pre><?print_r($smeta); ?></pre><?
+	$result = array(); 
+foreach($smeta as $v) 
+{$result = array_merge($result,$v);} 
+	
+	$result = array_unique($result);
+								
+								
+					?><pre><?print_r($result); ?></pre><?				
+								
+
+	
+	GatherLinks($result,$name_sheet,$active_sheet,$Fname);
+	$time = microtime(true) - $start;
+printf('Скрипт выполнялся %.4F сек.', $time/60);
+ 	
+}
