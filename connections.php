@@ -6,14 +6,14 @@ function get_web_page( $url )
 
   $ch = curl_init ( $url );
 
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);   // возвращает веб-страницу
-  curl_setopt($ch, CURLOPT_HEADER, 0);           // не возвращает заголовки
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);   // переходит по редиректам
-  curl_setopt($ch, CURLOPT_ENCODING, "");        // обрабатывает все кодировки
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  curl_setopt($ch, CURLOPT_HEADER, 0);           // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  curl_setopt($ch, CURLOPT_ENCODING, "");        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   curl_setopt($ch, CURLOPT_USERAGENT, $uagent);  // useragent
-  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120); // таймаут соединения
-  curl_setopt($ch, CURLOPT_TIMEOUT, 120);        // таймаут ответа
-  curl_setopt($ch, CURLOPT_MAXREDIRS, 10);       // останавливаться после 10-ого редиректа
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  curl_setopt($ch, CURLOPT_TIMEOUT, 120);        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+  curl_setopt($ch, CURLOPT_MAXREDIRS, 10);       // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 10-пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   //curl_setopt($ch, CURLOPT_PROXY, '85.26.146.169:80');
   $content = curl_exec( $ch );
   $err     = curl_errno( $ch );
@@ -38,7 +38,7 @@ function get_web_page( $url )
 	
 	}
 
-AutoDetectLaw ($url,$page);
+//AutoDetectLaw ($url,$page);
 
 
 
