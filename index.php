@@ -16,6 +16,7 @@
 <?
 $url = $_POST['url'];
 set_time_limit (0);
+include 'clients.php';
 include 'functions.php';
 include 'connections.php';
 
