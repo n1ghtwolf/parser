@@ -59,113 +59,7 @@ function getCSV()
 
 
 
-function AutoSearchKOM (){
-	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	
-	
-	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
-	$search[]= "%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80"; // арматур
-	$search[]= "%D1%82%D1%80%D1%83%D0%B1"; // труб
-	$search[]= "%D0%BC%D1%83%D1%84%D1%82"; // муфт
-	$search[]= "%D0%BA%D1%80%D0%B0%D0%BD+%D1%88%D0%B0%D1%80"; // кран шар
-	$search[]= "%D1%81%D0%B0%D0%BD%D1%82%D0%B5%D1%85"; // сантех
-	$search[]= "%D0%B4%D0%B5%D1%82%D0%B0%D0%BB+%D1%81%D0%BE%D0%B5%D0%B4"; // детали соед
-	$time =	time();
-	$sort[] = "sortBy=UPDATE_DATE";	
-	$sort[] = "sortBy=PUBLISH_DATE";	
-	$sort[] = "sortBy=UPDATE_PRICE";	
-	$sort[] = "sortBy=RELEVANCE";
-	$old = "05.09.2016";
- $olddate = date("d.m.y.D");
- $region[] = "5277320"; //Владимирская
- $region[]= "5277370"; //Нижегородская
-/*if (strpos($olddate,"Sun") == TRUE) {
-	
-	$newdate =date('d.m.Y', strtotime('-2 day'));
-	echo "обнаружено воскресенье, выставляю дату". $newdate ."\n";
-	$url= str_replace($old,$newdate,$url);
-}
-else 
-{
-	$newdate = date("d.m.Y");
-	$url =str_replace($old,$newdate,$url);
-	echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
-	
-	
-	
-}*/
-	$NumberOfPages = 1;
-	foreach ($region as $reg){
-		$url = str_replace("5277320",$reg,$url);
-foreach ($search as $se){
-	
-	$uri = str_replace("%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80",$se,$url);
-	
-	
-			foreach	($sort as $s)
-	{
-	$url1=str_replace("sortBy=UPDATE_DATE",$s,$uri);
-	//echo $url1 . "</br>";
-	$result = get_web_page($url1);
-			if (($result['errno'] != 0 )||($result['http_code'] != 200))
-    {
-				echo $result['errmsg'];
-				
-	}
-			else
-	{
-				$page = $result['content'];
-	}
-	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
-		
-	if($NumberOfPages>1)
-	{
-		for($i=0;$i<$NumberOfPages;$i++)
-		{
-					sleep(rand(3,5));
-					$replace = "pageNumber=".$i;
-					$url2=str_replace($match1,$match,$url1);	
-					echo $url2."</br>";
-		
-		$result = get_web_page($url2);
-			if (($result['errno'] != 0 )||($result['http_code'] != 200))
-    {
-				echo $result['errmsg'];
-					
-	}
-			else
-	{
-				$page = $result['content'];
-	}
 
-	 	preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
-		$smeta[]= $smet[2];
-		}
-	}
-	$smeta[] = $smet[2];
-	sleep(rand(3,5));
-	}
-	
-	}}
-	//$smeta[] = $smet[2];
-	
-	
-?><pre><?print_r($smeta); ?></pre><?
-		$result = array(); 
-foreach($smeta as $v) 
-{$result = array_merge($result,$v);} 
-	
-	$result = array_unique($result);
-								
-								
-					?><pre><?print_r($result); ?></pre><?				
-								
-
-	
-	AutoinputAfterAutoSearch($result);
-	echo "Выполнение функции заняло " .$time - time(). " секунд";//выдает милисекунды
- 	
-}
 
 
 
@@ -334,7 +228,7 @@ function SingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=1,$Fnam
 					{
 						for($i=2;$i<=$NumberOfPages;$i++)
 						{
-							sleep(rand(4,7));
+							sleep(rand(8,12));
 							$replace = "pageNumber=".$i;
 							$pattern = "pageNumber=1";
 							$url2=str_replace($pattern,$replace,$url1);	
@@ -357,7 +251,7 @@ function SingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=1,$Fnam
 						}
 					}
 		
-		sleep(rand(15,30));
+		sleep(rand(18,30));
 }
 	
 	
@@ -378,111 +272,7 @@ function SingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=1,$Fnam
 	$time = microtime(true) - $start;
 	printf('Скрипт выполнялся %.2F мин.', $time/60);
 }
-function ASC3(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$active_sheet = 0;
-	$name_sheet = "Smeta";
-	$Fname="ASC3";
-	$NumberOfPages = 1;
-	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
-}
-function Kostroma(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&regions=5277324&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$active_sheet = 0;
-	$name_sheet = "Kostroma";
-	$NumberOfPages = 4;
-	$Fname="Kostroma";
-	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
-}
-function Jaroslavl(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&regions=5277334&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$active_sheet = 0;
-	$name_sheet = "Jaroslavl";
-	$NumberOfPages= 3;
-	$Fname= "Jaroslavl";
-	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
-}
-function Ivanovo(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&regions=5277322&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$active_sheet = 0;
-	$name_sheet = "Ivanovo";
-	$NumberOfPages= 2;
-	$Fname= "Ivanovo";
-	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
-}
-function Vologda(){
-	$url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&regions=5277340&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	$active_sheet = 0;
-	$name_sheet = "Vologda";
-	$NumberOfPages= 4;
-	$Fname= "Vologda";
-	SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
-}
-function KomSistemEx(){
-	$url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-	
-	$str_replace_region = "5277320";
-	$str_replace_search = "%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80";
-	/*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
-	$search[]= "%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80"; // арматур
-	$search[]= "%D1%82%D1%80%D1%83%D0%B1"; // труб
-	$search[]= "%D0%BC%D1%83%D1%84%D1%82"; // муфт
-	$search[]= "%D0%BA%D1%80%D0%B0%D0%BD+%D1%88%D0%B0%D1%80"; // кран шар
-	$search[]= "%D1%81%D0%B0%D0%BD%D1%82%D0%B5%D1%85"; // сантех
-	$search[]= "%D0%B4%D0%B5%D1%82%D0%B0%D0%BB+%D1%81%D0%BE%D0%B5%D0%B4"; // детали соед
-	
-	$region[] = "5277320"; //Владимирская
-    $region[]= "5277370"; //Нижегородская
-	$active_sheet = 0;
-	$name_sheet = "KomSistemEx";
-	$Fname= "KomSistemEx";
-	MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
-	
-}
-function Evelina(){
-    $url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D0%B8%D1%82%D0%B0%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_10&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=28.10.2016&publishDateTo=&regions=5277382&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
 
-
-    $str_replace_region = "5277382";
-    $str_replace_search = "%D0%BF%D0%B8%D1%82%D0%B0%D0%BD";
-    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
-    $search[]= "%D0%BF%D0%B8%D1%82%D0%B0%D0%BD"; // питан
-    $search[]= "%D1%83%D0%B1%D0%BE%D1%80%D0%BA"; // уборк
-    $search[]= "%D0%BA%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD"; // клинин
-
-    $region[] = "5277382"; //Ямало-ненецкий
-    $region[]= "5277381"; //Ханты мансийский АО югра
-   
-    $active_sheet = 0;
-    $name_sheet = "Evelina";
-    $Fname= "Evelina";
-    
-	MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
-
-}
-function Lintorg(){
-    $url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BD%D0%B0%D0%BF%D0%BE%D0%BB+%D0%BF%D0%BE%D0%BA%D1%80%D1%8B%D1%82&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=27.10.2016&publishDateTo=&regions=5277378&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
-
-
-    $str_replace_region = "5277378";
-    $str_replace_search = "%D0%BD%D0%B0%D0%BF%D0%BE%D0%BB+%D0%BF%D0%BE%D0%BA%D1%80%D1%8B%D1%82";
-    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
-    $search[]= "%D0%BD%D0%B0%D0%BF%D0%BE%D0%BB+%D0%BF%D0%BE%D0%BA%D1%80%D1%8B%D1%82"; // напол покрыт
-    $search[]= "%D0%BB%D0%B8%D0%BD%D0%BE%D0%BB%D0%B5%D1%83%D0%BC"; // линолеум
-    $search[]= "%D1%81%D1%82%D1%80%D0%BE%D0%B9+%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB"; // строй материал
-    $search[]= "%D0%BF%D0%BE%D0%BB%D0%BE%D0%B2"; // полов
-
-    $region[] = "5277378"; // Курганская обл
-    $region[]= "5277383"; // Свердловская обл
-    $region[]= "5277380"; // Челябинская обл
-    
-	$active_sheet = 0;
-    $name_sheet = "Lintorg";
-    $Fname= "Lintorg";
-    
-	MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
-
-}
 function ExcelInput($arr_final,$active_sheet=0,$name_sheet="TestSmeta",$Fname="tenders",$i=1){
 	?><pre><?print_r($arr_final);?></pre><?
 	require_once ('PHPExcel.php');
@@ -514,7 +304,7 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
  echo "обнаружено записей" .sizeof($smeta);
  ?><pre><?print_r($smeta); ?></pre><?
  
-	foreach ($smeta as $parse ) // З.У.Е.Д будет через БД или др способ
+	foreach ($smeta as $parse ) 
 		{
 			if (strpos($parse,"http://zakupki.gov.ru") === FALSE )
 				{
@@ -605,7 +395,7 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
 		}
 			
 			    ExcelInput($arr_final,$active_sheet,$name_sheet,$Fname);
-			
+			add($arr_final,$Fname);
 		
 			
 }	
@@ -695,4 +485,112 @@ foreach($smeta as $v)
 	$time = microtime(true) - $start;
 printf('Скрипт выполнялся %.4F сек.', $time/60);
  	
+}
+function select()
+{	
+	
+	$mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+	$mysqli->query ("DELETE FROM `all` WHERE `type` LIKE 'Закупка у единственного поставщика';");
+    $mysqli->query ("DELETE FROM `all` WHERE `type` LIKE 'Закупка у единственного поставщика (подрядчика, исполнителя)';");
+    $mysqli->query ("DELETE FROM `all` WHERE `type` LIKE 'СБ-АСТ: Закупка у единственного источника';");
+    $mysqli->query ("DELETE FROM `all` WHERE `type` LIKE 'СБ: Закупка у единственного источника';");
+    $mysqli->query ("DELETE FROM `all` WHERE `type` LIKE 'Закупка у единственного источника';");
+	LazyDel();
+    $mysqli->query ("DELETE FROM `all` WHERE `link` = '';");
+	$sql="SELECT * FROM `all`";
+	$res = mysqli_query($mysqli,$sql);
+		while($user = mysqli_fetch_assoc($res))
+		{
+			$tender[]=$user;
+			echo "<pre>";
+			print_r($user);
+			echo "</pre>";
+		}
+	DbExport($tender);
+}
+function add($arr_final,$Fname)
+{	
+	$mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+	for ($j=0;$j<count($arr_final);$j++)
+  {
+	   
+   $mysqli->query("INSERT INTO `all` (`link`,`client`,`date_ann`,`finance_source`,`type`,`order`,`cost`,`city`)  VALUES ('{$arr_final[$j][0]}','{$Fname}','{$arr_final[$j][2]}','{$arr_final[$j][3]}','{$arr_final[$j][4]}','{$arr_final[$j][6]}','{$arr_final[$j][7]}','{$arr_final[$j][5]}');");
+ }
+ 
+  $mysqli->close();
+  
+}
+function DbExport($user,$active_sheet=0,$name_sheet="TestSmeta",$Fname="tenders",$i=1){
+	require_once ('PHPExcel.php');
+	require_once('PHPExcel/Writer/Excel5.php');
+	    $xls = new PHPExcel();
+		$xls->setActiveSheetIndex($active_sheet);
+		$sheet = $xls->getActiveSheet();
+		$sheet->setTitle($name_sheet);
+		
+			foreach($user as $value)
+				{
+					$sheet->setCellValue('A'.$i, $value['link']);
+					$sheet->setCellValue('B'.$i, $value['client']);
+					$sheet->setCellValue('C'.$i, $value['date_ann']);
+					$sheet->setCellValue('D'.$i, $value['finance_source']);
+					$sheet->setCellValue('E'.$i, $value['type']);
+					$sheet->setCellValue('F'.$i, $value['city']);
+					$sheet->setCellValue('G'.$i, $value['order']);
+					$sheet->setCellValue('H'.$i, $value['cost']);
+					
+					$sheet->getCell('A'.$i)->getHyperlink()->setUrl($value['link']);
+					$i++;
+				}
+		$objWriter = new PHPExcel_Writer_Excel5($xls);
+		$objWriter->save($Fname.'.xls');
+}
+function LazyDel()
+{	
+	
+	$mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%принтер%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%бензин%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%сканер%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%запасных частей%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%лекарств%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%медикамент%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%расходных материал%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%медицинского оборудования%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%лифт%' AND client !='ASC3';");
+	
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%антивирус%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%ГСМ%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%горюче смазочных материал%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%горюче-смазочных материал%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%пробирок%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%лабораторных исследован%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%услуг по физической охране%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Приобретение жилого помещения%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Приобретение жилых помещений%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%канцелярских товаров%';");
+	
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%бумаги%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%картридж%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%семинар%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%протез%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%диагностическ%';"	);
+	
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Услуги по охране%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%спецодежд%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%диспанцеризац%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%перчаток%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%неисключительной%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%вакцин%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%медицинских изделий%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%приобретение благоустроенного жилого помещения%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%услуг по проведению бактериологических и вирусологических исследований%';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка%' AND client = 'Vologda';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%автомобил%' AND client = 'Vologda';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%древесин%' AND client = 'Vologda';");
+	$mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%транспорт%' AND client = 'Vologda';");
+
+	
+   
+	
 }
