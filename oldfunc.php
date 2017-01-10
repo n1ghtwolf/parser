@@ -852,3 +852,161 @@ function AutosearchVologda(){
     $time = microtime(true) - $start;
     printf('Скрипт выполнялся %.4F сек.', $time);
 }
+function AutoSearchKOM (){
+    $url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=01.12.2016&publishDateTo=&regions=5277320&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+
+
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+    $search[]= "%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80"; // арматур
+    $search[]= "%D1%82%D1%80%D1%83%D0%B1"; // труб
+    $search[]= "%D0%BC%D1%83%D1%84%D1%82"; // муфт
+    $search[]= "%D0%BA%D1%80%D0%B0%D0%BD+%D1%88%D0%B0%D1%80"; // кран шар
+    $search[]= "%D1%81%D0%B0%D0%BD%D1%82%D0%B5%D1%85"; // сантех
+    $search[]= "%D0%B4%D0%B5%D1%82%D0%B0%D0%BB+%D1%81%D0%BE%D0%B5%D0%B4"; // детали соед
+    $time =	time();
+    $sort[] = "sortBy=UPDATE_DATE";
+    $sort[] = "sortBy=PUBLISH_DATE";
+    $sort[] = "sortBy=UPDATE_PRICE";
+    $sort[] = "sortBy=RELEVANCE";
+    $old = "05.09.2016";
+    $olddate = date("d.m.y.D");
+    $region[] = "5277320"; //Владимирская
+    $region[]= "5277370"; //Нижегородская
+    /*if (strpos($olddate,"Sun") == TRUE) {
+
+        $newdate =date('d.m.Y', strtotime('-2 day'));
+        echo "обнаружено воскресенье, выставляю дату". $newdate ."\n";
+        $url= str_replace($old,$newdate,$url);
+    }
+    else
+    {
+        $newdate = date("d.m.Y");
+        $url =str_replace($old,$newdate,$url);
+        echo "Воскресенье не обнаружено, выставляю текущую дату " . $newdate;
+
+
+
+    }*/
+    $NumberOfPages = 1;
+    foreach ($region as $reg){
+        $url = str_replace("5277320",$reg,$url);
+        foreach ($search as $se){
+
+            $uri = str_replace("%D0%B0%D1%80%D0%BC%D0%B0%D1%82%D1%83%D1%80",$se,$url);
+
+
+            foreach	($sort as $s)
+            {
+                $url1=str_replace("sortBy=UPDATE_DATE",$s,$uri);
+                //echo $url1 . "</br>";
+                $result = get_web_page($url1);
+                if (($result['errno'] != 0 )||($result['http_code'] != 200))
+                {
+                    echo $result['errmsg'];
+
+                }
+                else
+                {
+                    $page = $result['content'];
+                }
+                preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+
+                if($NumberOfPages>1)
+                {
+                    for($i=0;$i<$NumberOfPages;$i++)
+                    {
+                        sleep(rand(3,5));
+                        $replace = "pageNumber=".$i;
+                        $url2=str_replace($match1,$match,$url1);
+                        echo $url2."</br>";
+
+                        $result = get_web_page($url2);
+                        if (($result['errno'] != 0 )||($result['http_code'] != 200))
+                        {
+                            echo $result['errmsg'];
+
+                        }
+                        else
+                        {
+                            $page = $result['content'];
+                        }
+
+                        preg_match_all('/<td class="descriptTenderTd">(.+?)href="(.*?)"/s',$page,$smet);
+                        $smeta[]= $smet[2];
+                    }
+                }
+                $smeta[] = $smet[2];
+                sleep(rand(3,5));
+            }
+
+        }}
+    //$smeta[] = $smet[2];
+
+
+    ?><pre><?print_r($smeta); ?></pre><?
+    $result = array();
+    foreach($smeta as $v)
+    {$result = array_merge($result,$v);}
+
+    $result = array_unique($result);
+
+
+    ?><pre><?print_r($result); ?></pre><?
+
+
+
+    AutoinputAfterAutoSearch($result);
+    echo "Выполнение функции заняло " .$time - time(). " секунд";//выдает милисекунды
+}
+function getCSV()
+{
+    $data = File("tender.csv");
+    echo "<b><i><h2><center>Тендеры</b></i></h2></center>";
+    echo "<center><table border=0><tr>";
+    $dat_arr = explode(";", $data[0]);
+
+    for ($p=0;$p<count($dat_arr);$p++)
+    {
+        echo "<td bgcolor=lightblue><center><b><i>$dat_arr[$p]";
+    }
+    echo "</tr>";
+    for ($i=1;$i<count($data);$i++)
+    {
+        $data_array = explode(";", $data[$i]);
+        echo "<tr>";
+        for ($f=0;$f<count($data_array);$f++)
+        {
+            echo "<td bgcolor=lightblue><center><b><i>$data_array[$f]";
+        }
+        echo "</tr>";
+    }
+    echo "</table></center>";
+    /*==>Подщет кол-ва строк импортируемых каждый раз в каждой строке, пока что неактуально <==*/
+    /*$f = fopen("tender.csv", "rt") or die("Ошибка!");
+            for ($i=0; $data=fgetcsv($f,1000,";"); $i++)
+            {
+    $num = count($data);
+        echo "<h3>Строка номер $i (полей: $num):</h3>";
+            for ($c=0; $c<$num; $c++)
+        print "[$c]: $data[$c]<br>";
+            }
+    fclose($f);*/
+}
+function AutoWriteToFile ($arr_final)
+{
+
+
+    $fp = fopen('tender.csv','a');
+    fputs( $fp, b"\xEF\xBB\xBF" ); //как стало (были битые ссылки - это попытка исправить)
+
+			           foreach ($arr_final as $fields)
+                       {
+                           fputcsv($fp, $fields,";");
+                       }
+
+				 fclose($fp);
+				 unset ($arr_final,$arr,$_POST);
+
+
+}
+

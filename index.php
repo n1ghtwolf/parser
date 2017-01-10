@@ -11,7 +11,8 @@
 <input type="submit" value = "Evelina" name = "Evelina">
 
 <input type="submit" value = "select" name = "select">
-<input type="submit" value = "StroyInjProject" name = "StroyInjProject">
+<input type="submit" value = "DropTable" name = "DropTable">
+<input type="submit" value = "SmartTEST" name = "SmartTEST">
 
 
 
@@ -19,9 +20,12 @@
 <?
 $url = $_POST['url'];
 set_time_limit (0);
+ini_set('memory_limit', '-1');
 include 'clients.php';
+include 'DB.php';
 include 'functions.php';
 include 'connections.php';
+
 
 if ($_POST['CSV']){
 	getCSV();
@@ -49,8 +53,10 @@ if ($_POST['IvanovoEX']){
 }
 if ($_POST['VologdaEx']){
 	Vologda();
-}if ($_POST['StroyInjProject']){
-	StroyInjProject();
+}if ($_POST['DropTable']){
+	DropTable();
+}if ($_POST['SmartTEST']){
+    SmartTestKostroma();
 }
 
 
