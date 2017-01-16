@@ -9,6 +9,9 @@
 <input type="submit" value = "IvanovoEX" name = "IvanovoEX">
 <input type="submit" value = "VologdaEx" name = "VologdaEx">
 <input type="submit" value = "Evelina" name = "Evelina">
+<input type="submit" value = "Megatrans" name = "Megatrans">
+<input type="submit" value = "SibirShuesCompany" name = "SibirShuesCompany">
+<input type="submit" value = "VodniyMir" name = "VodniyMir">
 
 <input type="submit" value = "select" name = "select">
 <input type="submit" value = "DropTable" name = "DropTable">
@@ -29,6 +32,13 @@ include 'connections.php';
 
 if ($_POST['CSV']){
 	getCSV();
+}
+if ($_POST['Megatrans']){
+	Megatrans();
+}if ($_POST['SibirShuesCompany']){
+	SibirShuesCompany();
+}if ($_POST['VodniyMir']){
+	VodniyMir();
 }
 
 if ($_POST['select']){
