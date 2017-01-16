@@ -18,7 +18,7 @@ function LazyDel()
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по аренде грузовых транспортных средств с водителем%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Услуги лабораторий%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Обслуживание оргтехники%';");
-    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Выполнение работ по перевозке пассажиров автомобильным транспортом%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Выполнение работ по перевозке пассажиров автомобильным транспортом%' AND `client`!='Megatrans';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка реагентов для пренатального скрининга%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Мазут топочный%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка хозяйственных материалов%';");
@@ -40,7 +40,7 @@ function LazyDel()
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Бумага для офисной техники%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%услуг по обновлению программного обеспечения%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%услуг по повышению квалификации%';");
-    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%услуг по проведению предрейсовых медицинских осмотров%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%услуг по проведению предрейсовых медицинских осмотров%' AND `client`!='Megatrans';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%лабораторным исследованиям%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%услуг по техническому обслуживанию медицинской техники%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по сбору, вывозу и размещению (захоронению) отходов%';");
@@ -64,7 +64,7 @@ function LazyDel()
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка изотонического и  лизирующего реагента%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по обучению%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Консультант Плюс%';");
-    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по проведению предрейсового медицинского осмотра%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по проведению предрейсового медицинского осмотра%' AND `client`!='Megatrans';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%товаров для хозяйственных нужд%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%КонсультантПлюс%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по обязательному страхованию гражданской ответственности%';");
