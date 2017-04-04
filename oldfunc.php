@@ -5,6 +5,115 @@
  * Date: 27.10.16
  * Time: 15:41
  */
+ function AutoinputAfterAutoSearch ($smeta)
+{
+	
+								$smeta =array_unique($smeta);
+								//$smeta = ksort($smeta);
+								echo "обнаружено записей" .sizeof($smeta);
+								?><pre><?print_r($smeta); ?></pre><?
+								$i=1;
+				foreach ($smeta as $key=>$parse ) // доделать: исключение при З.У.Е.Д , оптимизировать
+			{
+					if (strpos($parse,"http://zakupki.gov.ru") === FALSE )
+					{
+								$add = "http://zakupki.gov.ru";
+								$url =$add.$parse;
+								$res = get_web_page ($url);
+								$page = $res['content'];
+								//AutoDetectLawForSearch($url,$page);
+								
+										preg_match	('/Размещено:(.\d{2}\.\d{2}\.\d{4})/',$page,$arr1); ?><br/><?
+										preg_match('/Способ определения поставщика (.*\n[^)])(\s+)(<td>)(.*)(<)/',$page,$arr2);
+										preg_match('/"notice_orderName">(.*)</',$page,$arr3);
+										preg_match_all('/Место нахождения(.*\n.*?<td>.+?,.+?,)(.+?),.*/',$page,$arr4);?><br/><?
+										preg_match('/цена контракта.*?<td>\s*(.*?)\s*</s',$page,$arr5);?><br/><?
+										//preg_match_all('/цена контракта(.*\n)(.*<td>)(.*)(<)/',$page,$arr5);?><br/><?
+										preg_match("/Источник финансирования.*?<td>\s*(.*?)\s*</s",$page,$arr6);?><br/><? 
+										//preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}\s\d{2}:\d{2})/s",$page,$arr8);	
+
+		
+						$arr= array(
+									array(
+																			
+										0 => $url,
+										1 => "1",
+										2 => $arr1[1],
+										3 => $arr6[1],
+										4 => $arr2[4],
+										5 => $arr4[2][0],
+										6 => $arr3[1],
+										7 => $arr5[1]
+										));
+													$arr_final[]=$arr[0];	
+														//AutoWriteToFile($arr,$url);
+								
+										
+					}
+					else 
+					{
+								$res = get_web_page ($parse);
+								$page = $res['content'];
+								$data ='http://zakupki.gov.ru/223/purchase/public/purchase/info/';
+								$data2='&epz=true&style44=false';
+								$data1='lot-list.html?noticeId=';
+								preg_match_all("/\d+/",$parse,$arr1);
+								$url = $data . $data1 . $arr1[0][1] . $data2;
+								$result1 = get_web_page($url);
+								$page1 = $result1['content'];
+								
+									preg_match('/Размещено(.\d{2}\.\d{2}\.\d{4})/',$page,$arr1);?><br/><?
+									preg_match('/Способ размещения закупки.*(\n.*)(\n\s+)(.*\S+)/',$page,$arr2);
+									preg_match('/Наименование закупки<\/td>\s*<td>\s+(.*)\S+/',$page,$arr3);//должно работать, проверить
+									preg_match('/Адрес места нахождения(.*\n.*?<td>.+?,)(.+?),.*/',$page,$arr4);
+									//preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}.*?\s\d{2}:\d{2})/s",$page,$arr8);
+									preg_match ('/(\s+)([\d\s\d]+\S\d+.*?)&nbsp;Российский рубль/',$page1,$arr5);//
+									preg_match ('/записей:.*?<strong>(.*?)\s*</',$page1,$lots);
+
+				$arr= array(
+							array(
+									
+									0 => $parse,				
+									1 => "1",				
+									2 => $arr1[1],				
+									3 => "",				
+									4 => $arr2[3],				
+									5 => $arr4[2],				
+									6 => $arr3[1]				
+													));
+
+			if ($lots[1]>1)
+{
+									$lots1[0]= "лотов";
+									$lots[1].=$lots1[0];
+									$arr5[2]= $lots[1];
+									$arr[0][7] = $arr5[2];	
+
+}
+			else {
+									$arr[0][7]= $arr5[2];
+									//$arr[0][5]=$arr6[0]="";
+									}
+								
+								$arr_final[] = $arr[0];
+														
+				//AutoWriteToFile($arr,$url);
+								
+								
+								
+					} 
+				echo $parse . " добавлена, " . " обработано записей " .$i ." из " . sizeof($smeta) ." </br> " ;	
+				ob_flush();
+				flush();
+				$i++;
+				sleep(rand(2,10));
+			}
+			
+			//return $arr_final;
+			AutoWriteToFile($arr_final);
+			//ExcelInput($arr_final);
+			getCSV();
+}
 function AutoDetectLaw ($url,$page)
 {
     if(strpos($url,'223')==true){

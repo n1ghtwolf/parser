@@ -3,20 +3,35 @@
 
 
 <input type="submit" value = "Excel ASC3" name = "ASC">
-<input type="submit" value = "Kostroma" name = "kostromaEx">
-<input type="submit" value = "Jaric" name = "jaricEx">
+<input type="submit" value = "Evelina" name = "Evelina">
 
+<br/>
+<input type="submit" value = "SmartTEST" name = "SmartTEST">
+<input type="submit" value = "Jaric" name = "jaricEx">
 <input type="submit" value = "IvanovoEX" name = "IvanovoEX">
 <input type="submit" value = "VologdaEx" name = "VologdaEx">
-<input type="submit" value = "Evelina" name = "Evelina">
-<input type="submit" value = "Megatrans" name = "Megatrans">
-<input type="submit" value = "SibirShuesCompany" name = "SibirShuesCompany">
-<input type="submit" value = "VodniyMir" name = "VodniyMir">
+<br/>
+<input type="submit" value = "Irisik" name = "Irisik">
+<input type="submit" value = "komsistems" name = "komsistems">
+<input type="submit" value = "StekSahalin" name = "StekSahalin">
+<input type="submit" value = "StekProekt" name = "StekProekt">
+<input type="submit" value = "ASC3KRIM" name = "ASC3KRIM">
+<input type="submit" value = "Best" name = "Best">
+<input type="submit" value = "ASC3CFO" name = "ASC3CFO">
+<input type="submit" value = "ASC3SZP" name = "ASC3SZP">
+<input type="submit" value = "ASC3PRIVOL" name = "ASC3PRIVOL">
+<input type="submit" value = "ASC3SOUTH" name = "ASC3SOUTH">
+<input type="submit" value = "count_records_best" name = "count_records_best">
+<input type="submit" value = "MjCompany" name = "MjCompany">
+<input type="submit" value = "BestCFO" name = "BestCFO">
 
+<br/>
+<br/>
 <input type="submit" value = "select" name = "select">
-<input type="submit" value = "DropTable" name = "DropTable">
-<input type="submit" value = "SmartTEST" name = "SmartTEST">
 
+<br/>
+<input type="submit" value = "DropTable" name = "DropTable">
+<br/>
 
 
 </form>
@@ -30,11 +45,35 @@ include 'functions.php';
 include 'connections.php';
 
 
-if ($_POST['CSV']){
-	getCSV();
+if ($_POST['StekProekt']){
+	StekProekt();
+}if ($_POST['StekSahalin']){
+	StekSahalin();
+}if ($_POST['ASC3KRIM']){
+	ASC3KRIM();
+}if ($_POST['Best']){
+	Best();
+}if ($_POST['ASC3CFO']){
+	ASC3CFO();
+}if ($_POST['ASC3SZP']){
+	ASC3SZP();
+}if ($_POST['ASC3PRIVOL']){
+	ASC3PRIVOL();
+}if ($_POST['ASC3SOUTH']){
+	ASC3SOUTH();
+}if ($_POST['StroyGroup']){
+	StroyGroup();
+}if ($_POST['Irisik']){
+	Irisik();
+}if ($_POST['count_records_best']){
+	count_records_best();
+}if ($_POST['komsistems']){
+	komsistems();
 }
-if ($_POST['Megatrans']){
-	Megatrans();
+if ($_POST['MjCompany']){
+	MjCompany();
+}if ($_POST['BestCFO']){
+	BestCFO();
 }if ($_POST['SibirShuesCompany']){
 	SibirShuesCompany();
 }if ($_POST['VodniyMir']){
