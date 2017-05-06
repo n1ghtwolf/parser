@@ -79,7 +79,26 @@ function LazyDel()
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%моющих средств%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%пленки рентгеновской%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%масок медицинских%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка средства автотранспортного%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка сварочных аппаратов%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка системных блоков%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по  обучению%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%материалов стоматологических%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Медицинское освидетельствование%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%медицинского осмотра%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Выбор на этапе проектно-изыскательских работ  поставщика%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%поставка тест-полосок%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка автомобильных шин%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка реагентов для иммуно - ферментного анализ%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по санитарно-бактериологическим и санитарно-гигиеническим исследованиям%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по проведению вирусологических, бактериологических и серологических исследований%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по проведению биохимических исследований%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка инвалидам подгузников для взрослых%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка инвалидам кресел-колясок различных модификаций%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка инвалидам впитывающих простыней%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%неисключительных прав%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Услуги по покупке и продаже жилых зданий%';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по информационному сопровождению установленной справочно-правовой системы%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по выполнению бактериологических исследований%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по приему, транспортировке, временному хранению и термическому уничтожению медицинских отходов%';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%расходного материала%';");
@@ -209,6 +228,24 @@ function LazyDel()
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%бумага%' AND client = 'Vologda';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%дезин%' AND client = 'Vologda';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%питан%' AND client = 'Vologda';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Организация отдыха%' AND client = 'Evelina';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%блоков бесперебойного%' AND client = 'Evelina';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%источника бесперебойного %' AND client = 'Evelina';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Приобретение жилья%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%продуктов питания%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%профессиональное обучение и дополнительное профессиональное образование%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по производству и размещению в эфире информационной телевизионной программы%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по производству аудиоматериалов%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по производству информационных видеоматериалов%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по размещению видеоматериалов%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Приобретение служебного жилого помещения%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг спецтехникой%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%лакокрасочные материалы%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Содержание порталов в информационно-коммуникационной сети Интернет%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по предоставлению каналов связи сети Интернет%' AND client = 'StekSahalin';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Оказание услуг по организации%' AND client = 'Irisik';");
+    $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%источника бесперебойного%' AND client = 'Irisik';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%Поставка%' AND client = 'Vologda';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%автомобил%' AND client = 'Vologda';");
     $mysqli->query ("DELETE FROM `all` WHERE `order` LIKE '%древесин%' AND client = 'Vologda';");
@@ -247,6 +284,7 @@ function select()
     $mysqli->query ("DELETE FROM `all` WHERE `type` LIKE 'Закупка у единственного поставщика (подрядчика, исполнителя) с учетом положений ст. 111 Закона № 44-ФЗ';");
     LazyDel();
     $mysqli->query ("DELETE FROM `all` WHERE `link` = '';");
+	AutoCityChange();
     $sql="SELECT * FROM `all`";
     $res = mysqli_query($mysqli,$sql);
     while($user = mysqli_fetch_assoc($res))
@@ -468,4 +506,34 @@ function LazyDelKostroma()
 
 
 
+}
+
+function AutoCityChange()
+{
+	 $mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+	 $mysqli->query ("UPDATE `all` SET `city` = 'Костромская' WHERE `client`= 'Kostroma';");
+	 $mysqli->query ("UPDATE `all` SET `city` = 'Ярославская' WHERE `client`= 'Jaroslavl';");
+	 $mysqli->query ("UPDATE `all` SET `city` = 'Ивановская' WHERE `client`= 'Ivanovo';");
+	 $mysqli->query ("UPDATE `all` SET `city` = 'Вологодская' WHERE `client`= 'Vologda';");
+	 $mysqli->query ("UPDATE `all` SET `city` = 'Сахалинская' WHERE `client`= 'StekSahalin';");
+}
+function AutoClientsChange()
+{
+	$mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Мастер' WHERE `client`= 'Kostroma';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Мастер' WHERE `client`= 'Jaroslavl';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Мастер' WHERE `client`= 'Ivanovo';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Мастер' WHERE `client`= 'Vologda';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'СТЭК' WHERE `client`= 'StekSahalin';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'СТЭК' WHERE `client`= 'StekProekt';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Омега' WHERE `client`= '8';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Касьянова ИП' WHERE `client`= '5';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Стиль.ру' WHERE `client`= 'стил';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Глэдис' WHERE `client`= 'гледис';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Комсистем' WHERE `client`= 'ком';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Комсистем' WHERE `client`= 'komsistems';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'МЖ Компания' WHERE `client`= 'MjCompany';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'АСЦ№3' WHERE `client`= 'ASC3';");
+	$mysqli->query ("UPDATE `sort` SET `client` = 'Эвелина+' WHERE `client`= 'Evelina';");
+	
 }

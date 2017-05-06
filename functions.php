@@ -199,6 +199,7 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
 					preg_match('/Способ размещения закупки.*(\n.*)(\n\s+)(.*\S+)/',$page,$arr2);
 					preg_match('/Наименование закупки<\/td>\s*<td>\s+(.*)\S+/',$page,$arr3);//должно работать, проверить
 					preg_match('/Адрес места нахождения(.*\n.*?<td>.+?,)(.+?),.*/',$page,$arr4);
+					//preg_match('/Адрес места нахождения.*?<td>.*?г (\w+),.+?</su',$page,$arr4);
 					preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}.*?\s\d{2}:\d{2})/s",$page,$arr8);
 					preg_match ('/(\s+)([\d\s\d]+\S\d+.*?)&nbsp;Российский рубль/',$page1,$arr5);//
 					preg_match ('/записей:.*?<strong>(.*?)\s*</',$page1,$lots);
@@ -212,6 +213,7 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
 									3 => "",				
 									4 => $arr2[3],				
 									5 => $arr4[2],				
+									//5 => $arr4[1],				
 									6 => $arr3[1],
 									8 => $arr8[1]		
 								  ));
@@ -744,3 +746,42 @@ if ($handle) {
 	GatherLinks ($file,$name_sheet,$active_sheet,$Fname);
 }
 }
+
+
+
+	function readExelFile(){
+		require_once ('PHPExcel.php');
+		$filepath = "Z:\home\localhost\www\parser/tenders.xls";
+//require_once «PHPExcel.php»; //подключаем наш фреймворк
+$ar=array(); // инициализируем массив
+$inputFileType = PHPExcel_IOFactory::identify($filepath);  // узнаем тип файла, excel может хранить файлы в разных форматах, xls, xlsx и другие
+$objReader = PHPExcel_IOFactory::createReader($inputFileType); // создаем объект для чтения файла
+$objPHPExcel = $objReader->load($filepath); // загружаем данные файла в объект
+$ar = $objPHPExcel->getActiveSheet()->toArray(); // выгружаем данные из объекта в массив
+
+
+
+$mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+foreach($ar as $ar_colls){
+
+    $mysqli->query("INSERT INTO `sort` (`link`,`client`,`date_ann`,`finance_source`,`type`,`order`,`cost`,`city`,`EndOfOpen`)  VALUES ('{$ar_colls[0]}','$ar_colls[1]','{$ar_colls[2]}','{$ar_colls[3]}','{$ar_colls[4]}','{$ar_colls[6]}','{$ar_colls[7]}','{$ar_colls[5]}','{$ar_colls[8]}');");
+  
+}
+$mysqli->query ("DELETE FROM `sort` WHERE `link` = '';");
+AutoClientsChange();
+    $sql="SELECT * FROM `sort` ORDER BY `client`";
+    $res = mysqli_query($mysqli,$sql);
+    while($user = mysqli_fetch_assoc($res))
+    {
+        $tender[]=$user;
+        echo "<pre>";
+        print_r($user);
+        echo "</pre>";
+    }
+	
+    DbExport($tender,$active_sheet=0,$name_sheet="sort",$Fname="sorted");
+	$mysqli->close();
+}
+  
+
+
