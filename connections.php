@@ -27,6 +27,7 @@ function get_web_page( $url )
   return $header;
 }
 
+
 	$result = get_web_page($url);
 		if (($result['errno'] != 0 )||($result['http_code'] != 200))
     {

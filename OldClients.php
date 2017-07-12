@@ -522,3 +522,282 @@ function ASC3SZP(){
     MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
 
 }
+function Lika (){
+	 $url="http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=&priceTo=&currencyId=1&publishDateFrom=23.03.2017&publishDateTo=&regions=5277373&af=true&ca=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+
+	 
+	 
+    $str_replace_region = "5277373";// пермский край
+    $str_replace_search = "%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86"; //организац
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+    $search[]= "%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86"; // организац
+    $search[]= "%D0%BF%D0%B8%D1%82%D0%B0%D0%BD"; // питан
+   
+    
+
+    $region[] = "5277373"; // пермский край
+    
+
+    $active_sheet = 0;
+    $name_sheet = "Lika";
+    $Fname= "Lika";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+}
+function ASC3(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D1%81%D0%BC%D0%B5%D1%82%D0%BD&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=0&priceTo=200000000000&currencyId=1&publishDateFrom=23.03.2017&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+	
+    $active_sheet = 0;
+    $name_sheet = "Smeta";
+    $Fname="ASC3";
+    $NumberOfPages = 1;
+    SingleLineSearch($url,$name_sheet,$active_sheet,$NumberOfPages,$Fname);
+}
+function BestPIR(){
+	 $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D0%B8%D1%80&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277362%2C+5277317%2C+9371527%2C+5277336&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D0%B8%D1%80";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+   $search[]= "%D0%BF%D0%B8%D1%80"; // пир
+    //$search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    //$search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "BestPIR";
+    $Fname= "BestPIR";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+}
+function Best1(){
+	 $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_district = "5277317";
+    $str_replace_search = "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+    //$search[]= "%D0%BF%D0%B8%D1%80"; // пир
+    $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    $search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $district[] = "5277317"; //ЦФО
+    $district[] = "5277336"; //СЗП
+    $district[] = "9371527"; //Южный
+    $district[] = "5277362"; //Приволжский
+  
+
+    $active_sheet = 0;
+    $name_sheet = "Best";
+    $Fname= "Best";
+	
+	$mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+  
+    $mysqli->query ("DELETE FROM `kostroma` ;");
+    $mysqli->query ("DELETE FROM `best` ;");
+    
+	SmartMultiDistrikts ($url,$name_sheet,$active_sheet,$Fname,$search,$district,$str_replace_search,$str_replace_district);
+}
+function BestPrivol(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277362&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+   //$search[]= "%D0%BF%D0%B8%D1%80"; // пир
+    $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    $search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "BestPrivol";
+    $Fname= "BestPrivol";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}
+function BestSouth(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=9371527&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+   //$search[]= "%D0%BF%D0%B8%D1%80"; // пир
+    $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    $search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "BestSouth";
+    $Fname= "BestSouth";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}
+function BestCFO(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+   //$search[]= "%D0%BF%D0%B8%D1%80"; // пир
+    $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    $search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "BestCFO";
+    $Fname= "BestCFO";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}
+function BestSZP(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82&morphology=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277336&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+   //$search[]= "%D0%BF%D0%B8%D1%80"; // пир
+    $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    $search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "BestSZP";
+    $Fname= "BestSZP";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}
+function ASC3CFO(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D0%B8%D1%80&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277317&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D0%B8%D1%80";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+   $search[]= "%D0%BF%D0%B8%D1%80"; // пир
+    //$search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    //$search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "ASC3CFO";
+    $Fname= "ASC3CFO";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}
+function ASC3SZP(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D0%B8%D1%80&strictEqual=on&pageNumber=1&sortDirection=true&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277336&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D0%B8%D1%80";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+    $search[]= "%D0%BF%D0%B8%D1%80"; // пир
+   // $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    //$search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "ASC3SZP";
+    $Fname= "ASC3SZP";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}
+	function ASC3SOUTH(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D0%B8%D1%80&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=9371527&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D0%B8%D1%80";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+    $search[]= "%D0%BF%D0%B8%D1%80"; // пир
+   // $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    //$search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "ASC3SOUTH";
+    $Fname= "ASC3SOUTH";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}	function ASC3PRIVOL(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D0%B8%D1%80&strictEqual=false&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=200000000000&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&districts=5277362&regions=&af=true&ca=true&pc=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "";
+    $str_replace_search = "%D0%BF%D0%B8%D1%80";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+   $search[]= "%D0%BF%D0%B8%D1%80"; // пир
+   // $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    //$search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = ""; //Ямало-ненецкий
+  
+
+    $active_sheet = 0;
+    $name_sheet = "ASC3PRIVOL";
+    $Fname= "ASC3PRIVOL";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}
+function ASC3KRIM(){
+    $url= "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?searchString=%D0%BF%D0%B8%D1%80&morphology=on&pageNumber=1&sortDirection=false&recordsPerPage=_50&showLotsInfoHidden=false&fz44=on&fz223=on&priceFrom=500000&priceTo=&currencyId=1&publishDateFrom=22.05.2017&publishDateTo=&regions=8408974&af=true&ca=true&sortBy=UPDATE_DATE&openMode=USE_DEFAULT_PARAMS";
+	
+
+	
+	$str_replace_region = "8408974";
+    $str_replace_search = "%D0%BF%D0%B8%D1%80";
+    /*---ПРОВЕРИТЬ ЗАМЕНУ ПОИСКОВОЙ СТРОКИ --- */
+    $search[]= "%D0%BF%D0%B8%D1%80"; // пир
+   $search[]= "%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82"; // проект
+    $search[]= "%D0%BF%D0%B5%D1%80%D0%B5%D0%BF%D0%BB%D0%B0%D0%BD"; // переплан
+
+    $region[] = "8408974"; //крым
+  
+
+    $active_sheet = 0;
+    $name_sheet = "BestKRIM";
+    $Fname= "BestKRIM";
+
+    MultiLine($url,$name_sheet,$active_sheet,$Fname,$search,$region,$str_replace_search,$str_replace_region);
+
+}

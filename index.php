@@ -3,7 +3,6 @@
 
 
 <input type="submit" value = "Excel ASC3" name = "ASC">
-<input type="submit" value = "Evelina" name = "Evelina">
 <input type="submit" value = "StekSahalin" name = "StekSahalin">
 <input type="submit" value = "StekProekt" name = "StekProekt">
 <br/>
@@ -13,13 +12,12 @@
 <input type="submit" value = "VologdaEx" name = "VologdaEx">
 <br/>
 <input type="submit" value = "komsistems" name = "komsistems">
-<input type="submit" value = "ASC3KRIM" name = "ASC3KRIM">
-<input type="submit" value = "Best" name = "Best">
-<input type="submit" value = "BestPIR" name = "BestPIR">
+<input type="submit" value = "Rostov" name = "Rostov">
 <br/>
 <input type="submit" value = "MjCompany" name = "MjCompany">
-<input type="submit" value = "StroyInjProj" name = "StroyInjProj">
+<input type="submit" value = "Lesuk" name = "Lesuk">
 <input type="submit" value = "readExelFile" name = "readExelFile">
+<input type="submit" value = "DES190" name = "DES190">
 
 <br/>
 <br/>
@@ -45,26 +43,26 @@ if ($_POST['StekProekt']){
 	StekProekt();
 }if ($_POST['StekSahalin']){
 	StekSahalin();
-}if ($_POST['ASC3KRIM']){
-	ASC3KRIM();
+}if ($_POST['Rostov']){
+	Rostov();
 }if ($_POST['Best']){
 	Best();
-}if ($_POST['BestPIR']){
-	BestPIR();
+}if ($_POST['DES190']){
+	DES190();
 }if ($_POST['readExelFile']){
 	readExelFile();
-}if ($_POST['ASC3SZP']){
-	ASC3SZP();
-}if ($_POST['ASC3PRIVOL']){
-	ASC3PRIVOL();
-}if ($_POST['ASC3SOUTH']){
-	ASC3SOUTH();
-}if ($_POST['BestSouth']){
-	BestSouth();
-}if ($_POST['Irisik']){
-	Irisik();
-}if ($_POST['StroyInjProj']){
-	StroyInjProj();
+}if ($_POST['Samara']){
+	Samara();
+}if ($_POST['NijniyNovgorod']){
+	NijniyNovgorod();
+}if ($_POST['Ekaterinburg']){
+	Ekaterinburg();
+}if ($_POST['MegaStroy']){
+	MegaStroy();
+}if ($_POST['samaraproducti']){
+	samaraproducti();
+}if ($_POST['Lesuk']){
+	Lesuk();
 }if ($_POST['komsistems']){
 	komsistems();
 }

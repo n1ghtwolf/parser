@@ -161,7 +161,8 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
 					//preg_match('/"notice_orderName">(.*)</',$page,$arr3);
 					preg_match_all('/Место нахождения(.*\n.*?<td>.+?,.+?,)(.+?),.*/',$page,$arr4);?><br/><?
 					preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}\s\d{2}:\d{2})/s",$page,$arr8);	
-					preg_match('/цена контракта.*?<td>\s*(.*?)\s*</s',$page,$arr5);?><br/><?
+					//preg_match('/цена контракта.*?<td>\s*(.*?)\s*</s',$page,$arr5);не всегда парсило?><br/><?
+					preg_match('/максимальная.*?цена контракта.*?<td>\s*(.*?)\s*</s',$page,$arr5);//должна работать?><br/><?
 					preg_match("/Источник финансирования.*?<td>\s*(.*?)\s*</s",$page,$arr6);?><br/><? 
 											
 
@@ -187,22 +188,29 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
 				{
 					$res = get_web_page ($parse);
 					$page = $res['content'];
-					$data ='http://zakupki.gov.ru/223/purchase/public/purchase/info/';
+					/*$data ='http://zakupki.gov.ru/223/purchase/public/purchase/info/';
 					$data2='&epz=true&style44=false';
 					$data1='lot-list.html?noticeId=';
 					preg_match_all("/\d+/",$parse,$arr1);
 					$url = $data . $data1 . $arr1[0][1] . $data2;
 					$result1 = get_web_page($url);
+					$page1 = $result1['content'];*/
+					$parse1 = str_replace("common-info","lot-list",$parse);// parse не везде поменял
+					$result1 = get_web_page($parse1);
 					$page1 = $result1['content'];
 								
 					preg_match('/Размещено(.\d{2}\.\d{2}\.\d{4})/',$page,$arr1);?><br/><?
 					preg_match('/Способ размещения закупки.*(\n.*)(\n\s+)(.*\S+)/',$page,$arr2);
-					preg_match('/Наименование закупки<\/td>\s*<td>\s+(.*)\S+/',$page,$arr3);//должно работать, проверить
-					preg_match('/Адрес места нахождения(.*\n.*?<td>.+?,)(.+?),.*/',$page,$arr4);
+					//preg_match('/Наименование закупки<\/td>\s*<td>\s+(.*)\S+/',$page,$arr3);//должно работать, проверить
+					preg_match('/Наименование закупки<.*?<td>(.*?)</s',$page,$arr3);//новая рега
+					//preg_match('/Адрес места нахождения(.*\n.*?<td>.+?,)(.+?),.*/',$page,$arr4);старая
+					preg_match('/Адрес места нахождения.*?<\/td>.*?<td>.*?,(.*?),.*?</s',$page,$arr4);//новая
 					//preg_match('/Адрес места нахождения.*?<td>.*?г (\w+),.+?</su',$page,$arr4);
 					preg_match ("/Дата и время окончания подачи.*?(\d{2}.\d{2}.\d{4}.*?\s\d{2}:\d{2})/s",$page,$arr8);
-					preg_match ('/(\s+)([\d\s\d]+\S\d+.*?)&nbsp;Российский рубль/',$page1,$arr5);//
+					//preg_match ('/(\s+)([\d\s\d]+\S\d+.*?)&nbsp;Российский рубль/',$page1,$arr5);// старая регулярка
+					preg_match ('/(.*?)&nbsp;Российский рубль/',$page1,$arr5);// новая регулярка опробовать 30.05
 					preg_match ('/записей:.*?<strong>(.*?)\s*</',$page1,$lots);
+
 
 				    $arr= array(
 							 array(
@@ -212,26 +220,35 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
 									2 => $arr1[1],				
 									3 => "",				
 									4 => $arr2[3],				
-									5 => $arr4[2],				
+									//5 => $arr4[2],				
+									5 => $arr4[1],				
 									//5 => $arr4[1],				
 									6 => $arr3[1],
+									//7 => $arr5[1],
 									8 => $arr8[1]		
 								  ));
-
+/*возможно дело в этом ифе.. лишние присвоения надо проверить 31.05*/
 					if ($lots[1]>1)
 						{
 						 $lots1[0]= "лотов";
 						 $lots[1].=$lots1[0];
-						 $arr5[2]= $lots[1];
-						 $arr[0][7] = $arr5[2];	
+						 //$arr5[2]= $lots[1];
+						 $arr5[1]= $lots[1];
+						 //$arr[0][7] = $arr5[1];
+						 $arr[0][7] = $lots[1];
+						
+						 
+						// $arr[0][7] = $arr5[2];	
 
 						}
 					else 
 						{
-						 $arr[0][7]= $arr5[2];
+						// $arr[0][7]= $arr5[2];
+						$trim = $arr5[1];
+						 $arr[0][7]= $trim;
 						 //$arr[0][5]=$arr6[0]="";
 						}
-								
+							
 					$arr_final[] = $arr[0];
 														
 				} 
@@ -240,7 +257,9 @@ function GatherLinks ($smeta,$name_sheet,$active_sheet,$Fname,$i = 1)
 				ob_flush();
 				flush();
 				$i++;
-				sleep(rand(4,8));
+				//sleep(rand(4,8));
+				//sleep(rand(3,5));
+				sleep(rand(2,3));
 		}
 			
 			    ExcelInput($arr_final,$active_sheet,$name_sheet,$Fname);
@@ -333,6 +352,7 @@ foreach($smeta as $v)
 	GatherLinks($result,$name_sheet,$active_sheet,$Fname);
 	$time = microtime(true) - $start;
 printf('Скрипт выполнялся %.4F сек.', $time/60);
+audiofile();
  	
 }
 
@@ -487,7 +507,8 @@ function SmartSingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=6,
         {
             for($i=2;$i<=$NumberOfPages;$i++)
             {
-                sleep(rand(8,12));
+                //sleep(rand(8,12));
+                sleep(rand(3,6));
                 $replace = "pageNumber=".$i;
                 $pattern = "pageNumber=1";
                 $url2=str_replace($pattern,$replace,$url1);
@@ -510,11 +531,13 @@ function SmartSingleLineSearch ($url,$name_sheet,$active_sheet,$NumberOfPages=6,
 
                 ;
                 $smeta[]= $res;
-                sleep(rand(6,9));
+                //sleep(rand(6,9));
+                sleep(rand(3,6));
             }
         }
 
-        sleep(rand(5,10));
+        //sleep(rand(5,10));
+        sleep(rand(3,6));
     }
 
 
@@ -533,6 +556,7 @@ for ($i=0;$i<count($smeta);$i++){
 
     $time = microtime(true) - $start;
     printf('Скрипт выполнялся %.2F мин.', $time/60);
+	audiofile();
 }
 function SmartMultiDistrikts ($url,$name_sheet,$active_sheet,$Fname,$search,$district,$str_replace_search,$str_replace_district,$NumberOfPages=1){
 
@@ -750,6 +774,7 @@ if ($handle) {
 
 
 	function readExelFile(){
+		
 		require_once ('PHPExcel.php');
 		$filepath = "Z:\home\localhost\www\parser/tenders.xls";
 //require_once «PHPExcel.php»; //подключаем наш фреймворк
@@ -762,6 +787,7 @@ $ar = $objPHPExcel->getActiveSheet()->toArray(); // выгружаем данн�
 
 
 $mysqli = new mysqli('localhost', 'root','', 'tenders') or mysqli_connect_error("Подключение невозможно: ");
+$mysqli->query ("DELETE FROM `sort` ;");
 foreach($ar as $ar_colls){
 
     $mysqli->query("INSERT INTO `sort` (`link`,`client`,`date_ann`,`finance_source`,`type`,`order`,`cost`,`city`,`EndOfOpen`)  VALUES ('{$ar_colls[0]}','$ar_colls[1]','{$ar_colls[2]}','{$ar_colls[3]}','{$ar_colls[4]}','{$ar_colls[6]}','{$ar_colls[7]}','{$ar_colls[5]}','{$ar_colls[8]}');");
@@ -782,6 +808,11 @@ AutoClientsChange();
     DbExport($tender,$active_sheet=0,$name_sheet="sort",$Fname="sorted");
 	$mysqli->close();
 }
-  
-
+function AutoSearch (){
+	
+} 
+function audiofile (){
+	$musicfile = "Agatino_Romero_feat_Jette_-_Aint_No_Sunshine_(versiya_2)_(ringon.ru).mp3";
+echo $audio = "<embed src='".$musicfile."'>";
+}
 
