@@ -1,9 +1,0 @@
-epz/order/notice/ea44/view/common-info.html?regNumber=0573100011017000006
-http://zakupki.gov.ru/223/purchase/public/purchase/info/common-info.html?noticeId=5000463&epz=true&style44=false
-epz/order/notice/ea44/view/common-info.html?regNumber=0348100063017000007
-epz/order/notice/zk44/view/common-info.html?regNumber=0848300041017000089
-http://zakupki.gov.ru/223/purchase/public/purchase/info/common-info.html?noticeId=4999184&epz=true&style44=false
-http://zakupki.gov.ru/223/purchase/public/purchase/info/common-info.html?noticeId=4999630&epz=true&style44=false
-http://zakupki.gov.ru/223/purchase/public/purchase/info/common-info.html?noticeId=4999570&epz=true&style44=false
-http://zakupki.gov.ru/223/purchase/public/purchase/info/common-info.html?noticeId=4999469&epz=true&style44=false
-epz/order/notice/zk44/view/common-info.html?regNumber=0848300041017000089
